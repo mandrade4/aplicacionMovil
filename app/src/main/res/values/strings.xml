@@ -3,4 +3,5 @@
     <string name="textoTts">Escribe un texto</string>
     <string name="textoHtml">URL</string>
     <string name="textoPdf">Sube un Pdf</string>
+    <string name="btnpdf">SUBIR PDF</string>
 </resources>

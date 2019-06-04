@@ -18,6 +18,7 @@
         android:layout_below="@+id/textTts"
         android:id="@+id/edtTts" />
 
+
     <TextView
         android:layout_width="100dp"
         android:layout_height="30dp"
@@ -38,6 +39,12 @@
         android:layout_below="@+id/edtHtml"
         android:id="@+id/textPdf"/>
 
+    <Button
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:text="@string/btnpdf"
+        android:layout_below="@+id/textPdf"
+        android:id="@+id/btnPdf"/>
 
 
 
