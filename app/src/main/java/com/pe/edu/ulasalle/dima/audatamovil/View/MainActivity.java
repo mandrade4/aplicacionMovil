@@ -1,7 +1,9 @@
-package com.pe.edu.ulasalle.dima.audatamovil;
+package com.pe.edu.ulasalle.dima.audatamovil.View;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.pe.edu.ulasalle.dima.audatamovil.R;
 
 public class MainActivity extends AppCompatActivity {
 
