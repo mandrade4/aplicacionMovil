@@ -9,7 +9,7 @@
     <TextView
         android:layout_width="100dp"
         android:layout_height="30dp"
-        android:text="Escribe texto"
+        android:text="@string/textoTts"
         android:id="@+id/textTts"/>
 
     <EditText
@@ -21,7 +21,7 @@
     <TextView
         android:layout_width="100dp"
         android:layout_height="30dp"
-        android:text="URL"
+        android:text="@string/textoHtml"
         android:layout_below="@+id/edtTts"
         android:id="@+id/textHtml"/>
 
@@ -34,7 +34,7 @@
     <TextView
         android:layout_width="100dp"
         android:layout_height="30dp"
-        android:text="Sube pdf"
+        android:text="@string/textoPdf"
         android:layout_below="@+id/edtHtml"
         android:id="@+id/textPdf"/>
 
