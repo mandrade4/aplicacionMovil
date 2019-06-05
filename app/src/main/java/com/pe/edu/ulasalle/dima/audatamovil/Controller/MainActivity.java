@@ -1,4 +1,4 @@
-package com.pe.edu.ulasalle.dima.audatamovil.View;
+package com.pe.edu.ulasalle.dima.audatamovil.Controller;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
