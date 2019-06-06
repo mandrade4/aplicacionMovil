@@ -24,7 +24,12 @@ public class MainActivity extends AppCompatActivity {
     EditText edtTts;
     Button btnTts;
 
-    TtsService ttsService;
+    TtsService ttsService = new TtsService() {
+        @Override
+        public Call<ResponseBody> sendText(String name) {
+            return null;
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +63,8 @@ public class MainActivity extends AppCompatActivity {
                 if(response.isSuccessful()){
                     Toast.makeText(MainActivity.this,"Nombre enviado satisfactoriamente", Toast.LENGTH_SHORT).show();
                 }
-                /*try {
+               /* try {
+                    //String jsonData = response.body().string();
                     System.out.println(response.body().string());
                 } catch (IOException e) {
                     e.printStackTrace();
