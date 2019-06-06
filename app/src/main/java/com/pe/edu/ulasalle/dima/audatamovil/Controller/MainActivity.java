@@ -12,6 +12,7 @@ import com.pe.edu.ulasalle.dima.audatamovil.R;
 import com.pe.edu.ulasalle.dima.audatamovil.Remote.Links;
 import com.pe.edu.ulasalle.dima.audatamovil.Service.TtsService;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -48,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void sendText(String text){
-        Call call = ttsService.sendText(text);
+        Call<ResponseBody> call = ttsService.sendText(text);
         call.enqueue(new Callback() {
             @Override
             public void onResponse(Call call, Response response) {
