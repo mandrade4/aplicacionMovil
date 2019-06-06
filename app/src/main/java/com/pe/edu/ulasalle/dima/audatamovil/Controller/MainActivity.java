@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
                 if(edtTts.getText().toString() == null || edtTts.getText().toString().trim().length() == 0) {
                     Toast.makeText(MainActivity.this, "Se necesita un Texto", Toast.LENGTH_SHORT).show();
                 } else {
-
+                    sendText(edtTts.getText().toString());
                 }
 
             }
