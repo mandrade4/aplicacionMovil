@@ -7,43 +7,70 @@
     tools:context=".Controller.MainActivity">
 
     <TextView
-        android:layout_width="100dp"
+        android:layout_width="150dp"
         android:layout_height="30dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
         android:text="@string/textoTts"
+        android:textColor="@color/colorTexto"
         android:id="@+id/textTts"/>
 
     <EditText
-        android:layout_width="100dp"
-        android:layout_height="30dp"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true"
         android:layout_below="@+id/textTts"
         android:id="@+id/edtTts" />
 
+    <Button
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="25dp"
+        android:layout_toRightOf="@+id/edtTts"
+        android:text="@string/btnTts"
+        android:id="@+id/btnTts"/>
+
 
     <TextView
-        android:layout_width="100dp"
+        android:layout_width="150dp"
         android:layout_height="30dp"
+        android:layout_centerHorizontal="true"
         android:text="@string/textoHtml"
+        android:textColor="@color/colorTexto"
         android:layout_below="@+id/edtTts"
         android:id="@+id/textHtml"/>
 
     <EditText
-        android:layout_width="100dp"
-        android:layout_height="30dp"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true"
         android:layout_below="@+id/textHtml"
         android:id="@+id/edtHtml" />
 
+    <Button
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="100dp"
+        android:layout_toRightOf="@+id/edtHtml"
+        android:text="@string/btnHtml"
+        android:id="@+id/btnHtml"/>
+
     <TextView
-        android:layout_width="100dp"
+        android:layout_width="150dp"
         android:layout_height="30dp"
+        android:layout_centerHorizontal="true"
         android:text="@string/textoPdf"
-        android:layout_below="@+id/edtHtml"
+        android:textColor="@color/colorTexto"
+        android:layout_below="@+id/btnHtml"
+        android:layout_marginTop="50dp"
         android:id="@+id/textPdf"/>
 
     <Button
-        android:layout_width="100dp"
+        android:layout_width="150dp"
         android:layout_height="50dp"
-        android:text="@string/btnpdf"
-        android:layout_below="@+id/textPdf"
+        android:text="@string/btnPdf"
+        android:layout_toRightOf="@+id/textPdf"
+        android:layout_marginTop="180dp"
         android:id="@+id/btnPdf"/>
 
 

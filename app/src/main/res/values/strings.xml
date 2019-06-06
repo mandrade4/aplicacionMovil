@@ -1,7 +1,9 @@
 <resources>
     <string name="app_name">AudataMovil</string>
     <string name="textoTts">Escribe un texto</string>
-    <string name="textoHtml">URL</string>
-    <string name="textoPdf">Sube un Pdf</string>
-    <string name="btnpdf">SUBIR PDF</string>
+    <string name="textoHtml">Escribe Url</string>
+    <string name="textoPdf">Seleciona un Pdf</string>
+    <string name="btnTts">Enviar Texto</string>
+    <string name="btnHtml">Enviar Url</string>
+    <string name="btnPdf">Selecionar PDF</string>
 </resources>
