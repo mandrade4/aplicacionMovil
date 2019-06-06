@@ -12,6 +12,8 @@ import com.pe.edu.ulasalle.dima.audatamovil.R;
 import com.pe.edu.ulasalle.dima.audatamovil.Remote.Links;
 import com.pe.edu.ulasalle.dima.audatamovil.Service.TtsService;
 
+import java.io.IOException;
+
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -50,21 +52,24 @@ public class MainActivity extends AppCompatActivity {
 
     public void sendText(String text){
         Call<ResponseBody> call = ttsService.sendText(text);
-        call.enqueue(new Callback() {
+        call.enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call call, Response response) {
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if(response.isSuccessful()){
                     Toast.makeText(MainActivity.this,"Nombre enviado satisfactoriamente", Toast.LENGTH_SHORT).show();
+                }
+                try {
+                    System.out.println(response.body().string());
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
             }
 
             @Override
-            public void onFailure(Call call, Throwable t) {
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
                 Log.e("ERROR: ", t.getMessage());
             }
         });
     }
-
-
     //Code here ...
 }
