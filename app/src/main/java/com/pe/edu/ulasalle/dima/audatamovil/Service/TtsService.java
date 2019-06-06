@@ -9,6 +9,6 @@ import retrofit2.http.Path;
 
 public interface TtsService {
 
-    @GET("tts/prueba/{name}")
+    @GET("/tts/prueba/{name}")
     Call<ResponseBody>  sendText(@Path("name")  String name);
 }
