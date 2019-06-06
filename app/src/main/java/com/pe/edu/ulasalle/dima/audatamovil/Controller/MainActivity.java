@@ -58,11 +58,11 @@ public class MainActivity extends AppCompatActivity {
                 if(response.isSuccessful()){
                     Toast.makeText(MainActivity.this,"Nombre enviado satisfactoriamente", Toast.LENGTH_SHORT).show();
                 }
-                try {
+                /*try {
                     System.out.println(response.body().string());
                 } catch (IOException e) {
                     e.printStackTrace();
-                }
+                }*/
             }
 
             @Override
