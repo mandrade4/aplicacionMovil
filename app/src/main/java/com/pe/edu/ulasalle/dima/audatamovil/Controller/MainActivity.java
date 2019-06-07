@@ -57,10 +57,13 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<String> call, Response<String> response) {
                 if(response.isSuccessful()){
                     Toast.makeText(MainActivity.this,"Nombre enviado satisfactoriamente", Toast.LENGTH_SHORT).show();
-                    String value = response.body();
-                    System.out.println(value);
+                    Log.i("Respuesta:", response.body());
+                    System.out.println( response.body());
+                    Toast.makeText(MainActivity.this,response.body(), Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(MainActivity.this, "Server returned an error", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "Error conexion con el Servidor", Toast.LENGTH_SHORT).show();
+                    Integer error = response.code();
+                    Toast.makeText(MainActivity.this, "Error " + error, Toast.LENGTH_SHORT).show();
                 }
                     //String jsonData = response.body().string();
 

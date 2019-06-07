@@ -10,6 +10,6 @@ import retrofit2.http.Path;
 
 public interface TtsService {
 
-    @POST("/tts/prueba/{name}")
+    @GET("tts/prueba/{name}")
     Call<String> sendText(@Path("name") String name);
 }
