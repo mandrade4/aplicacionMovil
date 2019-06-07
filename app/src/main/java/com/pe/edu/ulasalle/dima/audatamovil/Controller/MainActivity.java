@@ -24,12 +24,7 @@ public class MainActivity extends AppCompatActivity {
     EditText edtTts;
     Button btnTts;
 
-    TtsService ttsService = new TtsService() {
-        @Override
-        public Call<ResponseBody> sendText(String name) {
-            return null;
-        }
-    };
+    TtsService ttsService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,26 +51,27 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void sendText(String text){
-        Call<ResponseBody> call = ttsService.sendText(text);
-        call.enqueue(new Callback<ResponseBody>() {
+        Call<String> call = ttsService.sendText(text);
+        call.enqueue(new Callback<String>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(Call<String> call, Response<String> response) {
                 if(response.isSuccessful()){
                     Toast.makeText(MainActivity.this,"Nombre enviado satisfactoriamente", Toast.LENGTH_SHORT).show();
+                    String value = response.body();
+                    System.out.println(value);
+                } else {
+                    Toast.makeText(MainActivity.this, "Server returned an error", Toast.LENGTH_SHORT).show();
                 }
-               /* try {
                     //String jsonData = response.body().string();
-                    System.out.println(response.body().string());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }*/
+
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(Call<String> call, Throwable t) {
                 Log.e("ERROR: ", t.getMessage());
             }
         });
+
     }
     //Code here ...
 }
