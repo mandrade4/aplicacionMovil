@@ -51,30 +51,26 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void sendText(String text){
-        Call<String> call = ttsService.sendText(text);
-        call.enqueue(new Callback<String>() {
+        Call<ResponseBody> call = ttsService.sendText(text);
+        call.enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<String> call, Response<String> response) {
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if(response.isSuccessful()){
                     Toast.makeText(MainActivity.this,"Nombre enviado satisfactoriamente", Toast.LENGTH_SHORT).show();
-                    Log.i("Respuesta:", response.body());
-                    System.out.println( response.body());
-                    Toast.makeText(MainActivity.this,response.body(), Toast.LENGTH_SHORT).show();
+                    Log.i("Respuesta:", response.body().toString());
+                    System.out.println(response.body());
                 } else {
                     Toast.makeText(MainActivity.this, "Error conexion con el Servidor", Toast.LENGTH_SHORT).show();
                     Integer error = response.code();
                     Toast.makeText(MainActivity.this, "Error " + error, Toast.LENGTH_SHORT).show();
                 }
-                    //String jsonData = response.body().string();
-
             }
 
             @Override
-            public void onFailure(Call<String> call, Throwable t) {
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
                 Log.e("ERROR: ", t.getMessage());
             }
         });
-
     }
     //Code here ...
 }
