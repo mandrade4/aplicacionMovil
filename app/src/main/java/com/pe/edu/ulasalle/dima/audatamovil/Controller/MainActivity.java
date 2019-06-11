@@ -3,6 +3,10 @@ package com.pe.edu.ulasalle.dima.audatamovil.Controller;
 import android.Manifest;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
+import android.media.AudioFormat;
+import android.media.AudioManager;
+import android.media.AudioTrack;
+import android.media.MediaPlayer;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -19,7 +23,11 @@ import com.pe.edu.ulasalle.dima.audatamovil.R;
 import com.pe.edu.ulasalle.dima.audatamovil.Remote.Links;
 import com.pe.edu.ulasalle.dima.audatamovil.Service.TtsService;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Random;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -34,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     TtsService ttsService;
+    private MediaPlayer mediaPlayer = new MediaPlayer();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,8 +120,15 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if(response.isSuccessful()){
                     Toast.makeText(MainActivity.this,"Nombre enviado satisfactoriamente", Toast.LENGTH_SHORT).show();
-                    Log.i("Respuesta:", response.body().toString());
-                    System.out.println(response.body());
+                    Log.i("Respuesta to String:", response.body().toString());
+                    System.out.println("Respuesta del body: " + response.body());
+                    String text = response.body().toString();
+                    //byte[] bytes = text.getBytes();
+                    try {
+                        playMp3(response.body().bytes());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 } else {
                     Toast.makeText(MainActivity.this, "Error conexion con el Servidor", Toast.LENGTH_SHORT).show();
                     Integer error = response.code();
@@ -125,6 +141,55 @@ public class MainActivity extends AppCompatActivity {
                 Log.e("ERROR: ", t.getMessage());
             }
         });
+    }
+
+
+    private void playMp3(byte[] mp3SoundByteArray) {
+
+        int length = 22050 * 10;
+        byte[] data = new byte[length];
+        new Random().nextBytes(data);
+
+        System.out.println("Data generada" + data);
+        System.out.println("Data recivida" + mp3SoundByteArray);
+
+        final int TEST_SR = 22050;
+        final int TEST_CONF = AudioFormat.CHANNEL_OUT_MONO;
+        final int TEST_FORMAT = AudioFormat.ENCODING_PCM_16BIT;
+        final int TEST_MODE = AudioTrack.MODE_STATIC;
+        final int TEST_STREAM_TYPE = AudioManager.STREAM_ALARM;
+        AudioTrack track = new AudioTrack(TEST_STREAM_TYPE, TEST_SR, TEST_CONF, TEST_FORMAT, length, TEST_MODE);
+        track.write(data, 0, length);
+        track.play();
+        /*
+        try {
+            // create temp file that will hold byte array
+            File tempMp3 = File.createTempFile("cuchao", "mp3", getCacheDir());
+            tempMp3.deleteOnExit();
+            FileOutputStream fos = new FileOutputStream(tempMp3);
+            fos.write(mp3SoundByteArray);
+            fos.close();
+
+            System.out.println("Dentro de playMp3: " + mp3SoundByteArray);
+
+            // resetting mediaplayer instance to evade problems
+            mediaPlayer.reset();
+
+            // In case you run into issues with threading consider new instance like:
+            // MediaPlayer mediaPlayer = new MediaPlayer();
+
+            // Tried passing path directly, but kept getting
+            // "Prepare failed.: status=0x1"
+            // so using file descriptor instead
+            FileInputStream fis = new FileInputStream(tempMp3);
+            mediaPlayer.setDataSource(fis.getFD());
+            mediaPlayer.prepare();
+            mediaPlayer.start();
+
+        } catch (IOException ex) {
+            String s = ex.toString();
+            ex.printStackTrace();
+        }*/
     }
     //Code here ...
 }
