@@ -4,76 +4,86 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#69f0ae"
     tools:context=".Controller.MainActivity">
-
     <TextView
-        android:layout_width="150dp"
-        android:layout_height="30dp"
+        android:text="Bienvenido a Audata"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="40dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:text="@string/textoTts"
         android:textColor="@color/colorTexto"
-        android:id="@+id/textTts"/>
+        android:textSize="30sp" />
 
     <EditText
-        android:layout_width="150dp"
+        android:layout_width="260dp"
         android:layout_height="50dp"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/textTts"
-        android:id="@+id/edtTts" />
+        android:id="@+id/edtTts"
+        android:background="@drawable/custome_edit_text_bg"
+        android:drawableLeft="@drawable/ic_tts"
+        android:hint="Escribe un texto"
+        android:layout_marginTop="150dp"
+        android:singleLine="true"
+        android:layout_marginLeft="40dp"
+        />
 
     <Button
+        android:id="@+id/btnTts"
         android:layout_width="150dp"
         android:layout_height="50dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="150dp"
         android:layout_toRightOf="@+id/edtTts"
+        android:background="#00e676"
         android:text="@string/btnTts"
-        android:id="@+id/btnTts"/>
+        android:layout_marginRight="40dp"/>
 
 
-    <TextView
-        android:layout_width="150dp"
-        android:layout_height="30dp"
-        android:layout_centerHorizontal="true"
-        android:text="@string/textoHtml"
-        android:textColor="@color/colorTexto"
-        android:layout_below="@+id/edtTts"
-        android:id="@+id/textHtml"/>
+
 
     <EditText
-        android:layout_width="150dp"
+        android:layout_width="260dp"
         android:layout_height="50dp"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/textHtml"
-        android:id="@+id/edtHtml" />
+        android:layout_below="@+id/edtTts"
+        android:id="@+id/edtHtml"
+        android:background="@drawable/custome_edit_text_bg"
+        android:drawableLeft="@drawable/ic_html"
+        android:hint="Escribe una URL"
+        android:layout_marginTop="100dp"
+        android:singleLine="true"
+        android:layout_marginLeft="40dp"/>
 
     <Button
         android:layout_width="150dp"
         android:layout_height="50dp"
-        android:layout_marginTop="100dp"
         android:layout_toRightOf="@+id/edtHtml"
         android:text="@string/btnHtml"
-        android:id="@+id/btnHtml"/>
+        android:layout_marginTop="300dp"
+        android:background="#00e676"
+        android:id="@+id/btnHtml"
+        android:layout_marginRight="40dp"/>
 
     <TextView
-        android:layout_width="150dp"
-        android:layout_height="30dp"
-        android:layout_centerHorizontal="true"
-        android:text="@string/textoPdf"
+        android:layout_width="260dp"
+        android:layout_height="50dp"
+        android:hint="Selecciona un PDF"
+        android:singleLine="true"
         android:textColor="@color/colorTexto"
-        android:layout_below="@+id/btnHtml"
-        android:layout_marginTop="50dp"
-        android:id="@+id/textPdf"/>
+        android:layout_below="@+id/edtHtml"
+        android:layout_marginTop="100dp"
+        android:id="@+id/textPdf"
+        android:background="@drawable/custome_edit_text_bg"
+        android:drawableLeft="@drawable/ic_pdf"
+        android:layout_marginLeft="40dp"/>
 
     <Button
         android:layout_width="150dp"
         android:layout_height="50dp"
         android:text="@string/btnPdf"
         android:layout_toRightOf="@+id/textPdf"
-        android:layout_marginTop="180dp"
-        android:id="@+id/btnPdf"/>
-
-
-
+        android:layout_marginTop="450dp"
+        android:background="#00e676"
+        android:id="@+id/btnPdf"
+        android:layout_marginRight="40dp"/>
 
 </RelativeLayout>
