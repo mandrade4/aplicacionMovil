@@ -7,6 +7,7 @@ import android.media.AudioFormat;
 import android.media.AudioManager;
 import android.media.AudioTrack;
 import android.media.MediaPlayer;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -62,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(MainActivity.this, "Se necesita un Texto", Toast.LENGTH_SHORT).show();
                 } else {
                     if(ContextCompat.checkSelfPermission(MainActivity.this,
-                            Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
                         Toast.makeText(MainActivity.this, "Ya tienes permisos", Toast.LENGTH_SHORT).show();
                         sendText(edtTts.getText().toString());
                     } else {
@@ -76,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void requestStoragePermission(){
-        if(ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE)){
+        if(ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)){
 
             new AlertDialog.Builder(this)
                     .setTitle("Se necsitan permisos")
@@ -84,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
                     .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            ActivityCompat.requestPermissions(MainActivity.this, new String[] {Manifest.permission.READ_EXTERNAL_STORAGE}, STORAGE_PERMISSION_CODE);
+                            ActivityCompat.requestPermissions(MainActivity.this, new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE}, STORAGE_PERMISSION_CODE);
 
                         }
                     })
@@ -97,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
                     .create().show();
 
         } else {
-            ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.READ_EXTERNAL_STORAGE}, STORAGE_PERMISSION_CODE);
+            ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE}, STORAGE_PERMISSION_CODE);
         }
     }
 
@@ -145,9 +146,9 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void playMp3(byte[] mp3SoundByteArray) {
-
+        /*
         int length = 22050 * 10;
-        byte[] data = new byte[length];
+        byte[] data = mp3SoundByteArray;
         new Random().nextBytes(data);
 
         System.out.println("Data generada" + data);
@@ -161,35 +162,36 @@ public class MainActivity extends AppCompatActivity {
         AudioTrack track = new AudioTrack(TEST_STREAM_TYPE, TEST_SR, TEST_CONF, TEST_FORMAT, length, TEST_MODE);
         track.write(data, 0, length);
         track.play();
-        /*
+        */
+
         try {
-            // create temp file that will hold byte array
-            File tempMp3 = File.createTempFile("cuchao", "mp3", getCacheDir());
+
+
+            String file_name = "audio.mp3";
+            File file = new File(
+                    Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
+                    "audio.wav"
+                    );
+            FileOutputStream fos = new FileOutputStream(file);
+            fos.write(mp3SoundByteArray);
+            Toast.makeText(MainActivity.this, "Guardado en " + getFilesDir()+ "/" + file_name, Toast.LENGTH_SHORT).show();
+            fos.close();
+
+            /*
+            File tempMp3 = File.createTempFile("kurchina", "mp3", getCacheDir());
             tempMp3.deleteOnExit();
             FileOutputStream fos = new FileOutputStream(tempMp3);
             fos.write(mp3SoundByteArray);
             fos.close();
-
-            System.out.println("Dentro de playMp3: " + mp3SoundByteArray);
-
-            // resetting mediaplayer instance to evade problems
             mediaPlayer.reset();
-
-            // In case you run into issues with threading consider new instance like:
-            // MediaPlayer mediaPlayer = new MediaPlayer();
-
-            // Tried passing path directly, but kept getting
-            // "Prepare failed.: status=0x1"
-            // so using file descriptor instead
             FileInputStream fis = new FileInputStream(tempMp3);
             mediaPlayer.setDataSource(fis.getFD());
             mediaPlayer.prepare();
-            mediaPlayer.start();
+            mediaPlayer.start();*/
 
         } catch (IOException ex) {
-            String s = ex.toString();
             ex.printStackTrace();
-        }*/
+        }
     }
     //Code here ...
 }
