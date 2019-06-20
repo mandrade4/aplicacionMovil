@@ -1,12 +1,16 @@
 package com.pe.edu.ulasalle.dima.audatamovil.Controller;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.media.AudioAttributes;
 import android.media.AudioFormat;
 import android.media.AudioManager;
 import android.media.AudioTrack;
 import android.media.MediaPlayer;
+import android.os.AsyncTask;
 import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -14,6 +18,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -24,10 +29,17 @@ import com.pe.edu.ulasalle.dima.audatamovil.R;
 import com.pe.edu.ulasalle.dima.audatamovil.Remote.Links;
 import com.pe.edu.ulasalle.dima.audatamovil.Service.TtsService;
 
+import org.json.JSONObject;
+
+import java.io.BufferedOutputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.ByteBuffer;
+import java.util.Arrays;
 import java.util.Random;
 
 import okhttp3.ResponseBody;
@@ -122,14 +134,9 @@ public class MainActivity extends AppCompatActivity {
                 if(response.isSuccessful()){
                     Toast.makeText(MainActivity.this,"Nombre enviado satisfactoriamente", Toast.LENGTH_SHORT).show();
                     Log.i("Respuesta to String:", response.body().toString());
-                    System.out.println("Respuesta del body: " + response.body());
-                    String text = response.body().toString();
-                    //byte[] bytes = text.getBytes();
-                    try {
-                        playMp3(response.body().bytes());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    InputStream inputStream = response.body().byteStream();
+                    playMp3(inputStream);
+
                 } else {
                     Toast.makeText(MainActivity.this, "Error conexion con el Servidor", Toast.LENGTH_SHORT).show();
                     Integer error = response.code();
@@ -145,37 +152,120 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void playMp3(byte[] mp3SoundByteArray) {
-        /*
-        int length = 22050 * 10;
-        byte[] data = mp3SoundByteArray;
-        new Random().nextBytes(data);
+    private void playMp3(InputStream mp3SoundByteArray) {
+
+        /*int length = 22050 * 20; //10 seconds long
+        byte[] data = new byte[length];
+        //new Random().nextBytes(data);
 
         System.out.println("Data generada" + data);
         System.out.println("Data recivida" + mp3SoundByteArray);
 
-        final int TEST_SR = 22050;
+        final int TEST_SR = 22050; //This is from an example I found online.
         final int TEST_CONF = AudioFormat.CHANNEL_OUT_MONO;
         final int TEST_FORMAT = AudioFormat.ENCODING_PCM_16BIT;
-        final int TEST_MODE = AudioTrack.MODE_STATIC;
+        final int TEST_MODE = AudioTrack.MODE_STATIC; //I need static mode.
         final int TEST_STREAM_TYPE = AudioManager.STREAM_ALARM;
         AudioTrack track = new AudioTrack(TEST_STREAM_TYPE, TEST_SR, TEST_CONF, TEST_FORMAT, length, TEST_MODE);
-        track.write(data, 0, length);
-        track.play();
-        */
+        track.write(mp3SoundByteArray, 0, mp3SoundByteArray.length);
+        track.play();*/
 
+        /*
+        String encoded = Base64.encodeToString(mp3SoundByteArray, 0);
+        Log.d("Encoded string: ", encoded);
+
+        byte[] decoded = Base64.decode(encoded, 0);
+        Log.d("Decoded bytes: ",  Arrays.toString(decoded));*/
+
+        byte[] buffer = new byte[8192];
+        int bytesRead;
+        ByteArrayOutputStream output = new ByteArrayOutputStream();
         try {
+        while ((bytesRead = mp3SoundByteArray.read(buffer)) != -1) {
+            output.write(buffer, 0, bytesRead);
+        }
+        } catch (IOException ex){
+            ex.printStackTrace();
+            Log.d("Error audio: ", String.valueOf(ex));
+        }
 
 
-            String file_name = "audio.mp3";
+
+
+
+        int TEST_SR = 48000; //This is from an example I found online.
+        //int length = AudioTrack.getMinBufferSize(TEST_SR, AudioFormat.CHANNEL_OUT_MONO, AudioFormat.ENCODING_PCM_16BIT);
+        int length = 22050 * 20; //10 seconds long
+        byte[] data = new byte[length];
+        new Random().nextBytes(data);
+        System.out.println("Data generada" + data);
+
+        AudioTrack track = new AudioTrack.Builder()
+                .setAudioAttributes(new AudioAttributes.Builder()
+                        .setUsage(AudioAttributes.USAGE_MEDIA)
+                        .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                        .build())
+                .setAudioFormat(new AudioFormat.Builder()
+                        .setChannelMask(AudioFormat.CHANNEL_OUT_MONO)
+                        .setEncoding(AudioFormat.ENCODING_PCM_16BIT)
+                        .setSampleRate(TEST_SR)
+                        .build())
+                .setBufferSizeInBytes(length)
+                .build();
+
+        track.setPlaybackRate(TEST_SR);
+        track.write(output.toByteArray(), 0, length );
+        track.play();
+
+
+
+        /*
+        System.out.println("Data creada" + output.toByteArray());
+        try {
             File file = new File(
                     Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
-                    "audio.wav"
+                    "audio.mp3"
+            );
+            FileOutputStream fos = new FileOutputStream(file);
+            fos.write(output.toByteArray());
+            Log.d("FileSize: ", String.valueOf(file.getTotalSpace()));
+            fos.close();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            Log.d("Error audio: ", String.valueOf(ex));
+        }*/
+
+
+        /*
+        String encoded = Base64.encodeToString(mp3SoundByteArray, 0);
+        Log.d("Encoded string: ", encoded);
+
+        byte[] decoded = Base64.decode(encoded, 0);
+        Log.d("Decoded bytes: ",  Arrays.toString(decoded));
+        /*
+        try {
+
+            File file = new File(
+                    Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
+                    "audio.mp3"
                     );
             FileOutputStream fos = new FileOutputStream(file);
-            fos.write(mp3SoundByteArray);
-            Toast.makeText(MainActivity.this, "Guardado en " + getFilesDir()+ "/" + file_name, Toast.LENGTH_SHORT).show();
+            Integer bufferSize = 100;
+            System.out.println("Tamañano" + mp3SoundByteArray.length);
+            Log.d("FileSize: ", String.valueOf(file.getTotalSpace()));
             fos.close();
+            ByteBuffer buffer = ByteBuffer.allocate(bufferSize*2);
+            int tick = 0;
+
+            for (int i = 0; i < mp3SoundByteArray.length; i++) {
+                tick++;
+                fos.write(mp3SoundByteArray, i-tick+1, tick);
+                buffer.clear();
+                tick = 0;
+            }
+
+            Log.d("FileSize: ", String.valueOf(file.getTotalSpace()));
+            fos.close();*/
 
             /*
             File tempMp3 = File.createTempFile("kurchina", "mp3", getCacheDir());
@@ -188,10 +278,11 @@ public class MainActivity extends AppCompatActivity {
             mediaPlayer.setDataSource(fis.getFD());
             mediaPlayer.prepare();
             mediaPlayer.start();*/
-
+        /*
         } catch (IOException ex) {
             ex.printStackTrace();
-        }
+            Log.d("Error audio: ", String.valueOf(ex));
+        }*/
     }
     //Code here ...
 }
