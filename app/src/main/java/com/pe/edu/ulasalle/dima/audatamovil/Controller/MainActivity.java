@@ -1,16 +1,8 @@
 package com.pe.edu.ulasalle.dima.audatamovil.Controller;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.media.AudioAttributes;
-import android.media.AudioFormat;
-import android.media.AudioManager;
-import android.media.AudioTrack;
-import android.media.MediaPlayer;
-import android.os.AsyncTask;
 import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -18,7 +10,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -29,19 +20,10 @@ import com.pe.edu.ulasalle.dima.audatamovil.R;
 import com.pe.edu.ulasalle.dima.audatamovil.Remote.Links;
 import com.pe.edu.ulasalle.dima.audatamovil.Service.TtsService;
 
-import org.json.JSONObject;
 
-import java.io.BufferedOutputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.ByteBuffer;
-import java.util.Arrays;
-import java.util.Random;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -56,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     TtsService ttsService;
-    private MediaPlayer mediaPlayer = new MediaPlayer();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -136,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(MainActivity.this,"Nombre enviado satisfactoriamente", Toast.LENGTH_SHORT).show();
                     Log.i("Respuesta to String:", response.body().toString());
                     try {
-                        playMp3(response.body().bytes());
+                        saveMp3(response.body().bytes());
                     } catch (IOException e) {
                         Log.i("Error audio:", e.toString());
                     }
@@ -156,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void playMp3(byte[] mp3SoundByteArray) {
+    private void saveMp3(byte[] mp3SoundByteArray) {
         try {
             File file = new File(
                     Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
