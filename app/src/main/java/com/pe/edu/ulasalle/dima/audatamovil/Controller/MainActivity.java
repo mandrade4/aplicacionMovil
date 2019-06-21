@@ -33,6 +33,7 @@ import org.json.JSONObject;
 
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -134,8 +135,11 @@ public class MainActivity extends AppCompatActivity {
                 if(response.isSuccessful()){
                     Toast.makeText(MainActivity.this,"Nombre enviado satisfactoriamente", Toast.LENGTH_SHORT).show();
                     Log.i("Respuesta to String:", response.body().toString());
-                    InputStream inputStream = response.body().byteStream();
-                    playMp3(inputStream);
+                    try {
+                        playMp3(response.body().bytes());
+                    } catch (IOException e) {
+                        Log.i("Error audio:", e.toString());
+                    }
 
                 } else {
                     Toast.makeText(MainActivity.this, "Error conexion con el Servidor", Toast.LENGTH_SHORT).show();
@@ -152,137 +156,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void playMp3(InputStream mp3SoundByteArray) {
-
-        /*int length = 22050 * 20; //10 seconds long
-        byte[] data = new byte[length];
-        //new Random().nextBytes(data);
-
-        System.out.println("Data generada" + data);
-        System.out.println("Data recivida" + mp3SoundByteArray);
-
-        final int TEST_SR = 22050; //This is from an example I found online.
-        final int TEST_CONF = AudioFormat.CHANNEL_OUT_MONO;
-        final int TEST_FORMAT = AudioFormat.ENCODING_PCM_16BIT;
-        final int TEST_MODE = AudioTrack.MODE_STATIC; //I need static mode.
-        final int TEST_STREAM_TYPE = AudioManager.STREAM_ALARM;
-        AudioTrack track = new AudioTrack(TEST_STREAM_TYPE, TEST_SR, TEST_CONF, TEST_FORMAT, length, TEST_MODE);
-        track.write(mp3SoundByteArray, 0, mp3SoundByteArray.length);
-        track.play();*/
-
-        /*
-        String encoded = Base64.encodeToString(mp3SoundByteArray, 0);
-        Log.d("Encoded string: ", encoded);
-
-        byte[] decoded = Base64.decode(encoded, 0);
-        Log.d("Decoded bytes: ",  Arrays.toString(decoded));*/
-
-        byte[] buffer = new byte[8192];
-        int bytesRead;
-        ByteArrayOutputStream output = new ByteArrayOutputStream();
-        try {
-        while ((bytesRead = mp3SoundByteArray.read(buffer)) != -1) {
-            output.write(buffer, 0, bytesRead);
-        }
-        } catch (IOException ex){
-            ex.printStackTrace();
-            Log.d("Error audio: ", String.valueOf(ex));
-        }
-
-
-
-
-
-        int TEST_SR = 48000; //This is from an example I found online.
-        //int length = AudioTrack.getMinBufferSize(TEST_SR, AudioFormat.CHANNEL_OUT_MONO, AudioFormat.ENCODING_PCM_16BIT);
-        int length = 22050 * 20; //10 seconds long
-        byte[] data = new byte[length];
-        new Random().nextBytes(data);
-        System.out.println("Data generada" + data);
-
-        AudioTrack track = new AudioTrack.Builder()
-                .setAudioAttributes(new AudioAttributes.Builder()
-                        .setUsage(AudioAttributes.USAGE_MEDIA)
-                        .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                        .build())
-                .setAudioFormat(new AudioFormat.Builder()
-                        .setChannelMask(AudioFormat.CHANNEL_OUT_MONO)
-                        .setEncoding(AudioFormat.ENCODING_PCM_16BIT)
-                        .setSampleRate(TEST_SR)
-                        .build())
-                .setBufferSizeInBytes(length)
-                .build();
-
-        track.setPlaybackRate(TEST_SR);
-        track.write(output.toByteArray(), 0, length );
-        track.play();
-
-
-
-        /*
-        System.out.println("Data creada" + output.toByteArray());
+    private void playMp3(byte[] mp3SoundByteArray) {
         try {
             File file = new File(
                     Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
                     "audio.mp3"
             );
             FileOutputStream fos = new FileOutputStream(file);
-            fos.write(output.toByteArray());
-            Log.d("FileSize: ", String.valueOf(file.getTotalSpace()));
-            fos.close();
-        } catch (IOException ex) {
-            ex.printStackTrace();
-            Log.d("Error audio: ", String.valueOf(ex));
-        }*/
-
-
-        /*
-        String encoded = Base64.encodeToString(mp3SoundByteArray, 0);
-        Log.d("Encoded string: ", encoded);
-
-        byte[] decoded = Base64.decode(encoded, 0);
-        Log.d("Decoded bytes: ",  Arrays.toString(decoded));
-        /*
-        try {
-
-            File file = new File(
-                    Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
-                    "audio.mp3"
-                    );
-            FileOutputStream fos = new FileOutputStream(file);
-            Integer bufferSize = 100;
-            System.out.println("Tamañano" + mp3SoundByteArray.length);
-            Log.d("FileSize: ", String.valueOf(file.getTotalSpace()));
-            fos.close();
-            ByteBuffer buffer = ByteBuffer.allocate(bufferSize*2);
-            int tick = 0;
-
-            for (int i = 0; i < mp3SoundByteArray.length; i++) {
-                tick++;
-                fos.write(mp3SoundByteArray, i-tick+1, tick);
-                buffer.clear();
-                tick = 0;
-            }
-
-            Log.d("FileSize: ", String.valueOf(file.getTotalSpace()));
-            fos.close();*/
-
-            /*
-            File tempMp3 = File.createTempFile("kurchina", "mp3", getCacheDir());
-            tempMp3.deleteOnExit();
-            FileOutputStream fos = new FileOutputStream(tempMp3);
             fos.write(mp3SoundByteArray);
             fos.close();
-            mediaPlayer.reset();
-            FileInputStream fis = new FileInputStream(tempMp3);
-            mediaPlayer.setDataSource(fis.getFD());
-            mediaPlayer.prepare();
-            mediaPlayer.start();*/
-        /*
+            Log.d("FileSize: ", String.valueOf(file.getTotalSpace()));
         } catch (IOException ex) {
             ex.printStackTrace();
             Log.d("Error audio: ", String.valueOf(ex));
-        }*/
+        }
+
     }
-    //Code here ...
 }
