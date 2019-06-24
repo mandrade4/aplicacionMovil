@@ -2,6 +2,7 @@ package com.pe.edu.ulasalle.dima.audatamovil.Controller;
 
 import android.Manifest;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Environment;
 import android.support.annotation.NonNull;
@@ -59,7 +60,9 @@ public class MainActivity extends AppCompatActivity {
                     if(ContextCompat.checkSelfPermission(MainActivity.this,
                             Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
                         Toast.makeText(MainActivity.this, "Ya tienes permisos", Toast.LENGTH_SHORT).show();
-                        sendText(edtTts.getText().toString());
+                        //sendText(edtTts.getText().toString());
+                        Intent i = new Intent(getApplicationContext(), TtsActivity.class);
+                        startActivity(i);
                     } else {
                         requestStoragePermission();
                     }
@@ -101,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == STORAGE_PERMISSION_CODE) {
             if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
                 Toast.makeText(this, "Permiso condedido", Toast.LENGTH_SHORT).show();
-                sendText(edtTts.getText().toString());
+                //sendText(edtTts.getText().toString());
             } else {
                 Toast.makeText(this, "Permiso denegado", Toast.LENGTH_SHORT).show();
             }
