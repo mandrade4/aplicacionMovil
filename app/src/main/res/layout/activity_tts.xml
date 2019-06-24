@@ -7,4 +7,38 @@
     android:background="@drawable/pop_bg"
     tools:context=".Controller.TtsActivity">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RadioGroup
+            android:id="@+id/ttsRadioGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:orientation="horizontal"
+            android:layout_centerHorizontal="true">
+
+            <RadioButton
+                android:id="@+id/ttsRadioMP3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="MP3"/>
+
+            <RadioButton
+                android:id="@+id/ttsRadioAAC"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="AAC"/>
+        </RadioGroup>
+
+        <Button
+            android:id="@+id/btnEnviarTts"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ENVIAR"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/ttsRadioGroup"/>
+    </RelativeLayout>
+
+
 </android.support.constraint.ConstraintLayout>
