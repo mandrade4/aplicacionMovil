@@ -13,6 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".Controller.HtmlActivity"></activity>
         <activity android:name=".Controller.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,8 +21,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Controller.TtsActivity"
-            android:theme="@style/Pop"></activity>
+        <activity
+            android:name=".Controller.TtsActivity"
+            android:theme="@style/Pop" />
+        <activity
+            android:name=".Controller.HtmlActivity"
+            android:theme="@style/Pop" />
     </application>
 
 </manifest>
