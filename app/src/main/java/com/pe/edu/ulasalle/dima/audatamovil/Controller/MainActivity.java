@@ -7,7 +7,6 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -27,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
     EditText edtHtml;
     Button btnHtml;
 
+    Button btnPdf;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
         boolean firstStart = prefs.getBoolean("firstStart",true);
 
         if (firstStart) {
-            //showStartDialog();
             requestStoragePermission();
         }
 
@@ -46,6 +46,8 @@ public class MainActivity extends AppCompatActivity {
 
         edtHtml = findViewById(R.id.edtHtml);
         btnHtml = findViewById(R.id.btnHtml);
+
+        btnPdf = findViewById(R.id.btnPdf);
 
 
         btnTts.setOnClickListener(new View.OnClickListener() {
@@ -66,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                if(edtTts.getText().toString() == null || edtHtml.getText().toString().trim().length() == 0) {
+                if(edtHtml.getText().toString() == null || edtHtml.getText().toString().trim().length() == 0) {
                     Toast.makeText(MainActivity.this, "Se necesita una URL", Toast.LENGTH_SHORT).show();
                 } else {
                     Intent i = new Intent(getApplicationContext(), HtmlActivity.class);
@@ -74,25 +76,18 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        btnPdf.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setType("application/pdf");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent, "Select PDF"), 1);
+            }
+        });
     }
 
-    private void showStartDialog(){
-        new AlertDialog.Builder(this)
-                .setTitle("Dialogo")
-                .setMessage("Esto solo se deberia mostrar una vez")
-                .setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                })
-                .create().show();
-
-        SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putBoolean("firstStart", false);
-        editor.apply();
-    }
 
     private void requestStoragePermission(){
         if(ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)){
