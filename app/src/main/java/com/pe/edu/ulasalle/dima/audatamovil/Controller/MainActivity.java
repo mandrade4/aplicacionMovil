@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.pe.edu.ulasalle.dima.audatamovil.R;
@@ -22,7 +23,10 @@ public class MainActivity extends AppCompatActivity {
     private int STORAGE_PERMISSION_CODE = 1;
 
     EditText edtTts;
+    TextView textPdf;
+
     Button btnTts;
+    Button btnPdf;
 
 
     @Override
@@ -34,12 +38,13 @@ public class MainActivity extends AppCompatActivity {
         boolean firstStart = prefs.getBoolean("firstStart",true);
 
         if (firstStart) {
-            //showStartDialog();
             requestStoragePermission();
         }
 
         edtTts = findViewById(R.id.edtTts);
+        textPdf = findViewById(R.id.textPdf);
         btnTts = findViewById(R.id.btnTts);
+        btnPdf = findViewById(R.id.btnPdf);
 
 
         btnTts.setOnClickListener(new View.OnClickListener() {
@@ -55,24 +60,17 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-    }
 
-    private void showStartDialog(){
-        new AlertDialog.Builder(this)
-                .setTitle("Dialogo")
-                .setMessage("Esto solo se deberia mostrar una vez")
-                .setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                })
-                .create().show();
+        btnPdf.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setType("application/pdf");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent, "Select PDF"), 1);
+            }
+        });
 
-        SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putBoolean("firstStart", false);
-        editor.apply();
     }
 
     private void requestStoragePermission(){
