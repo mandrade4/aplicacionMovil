@@ -24,6 +24,9 @@ public class MainActivity extends AppCompatActivity {
     EditText edtTts;
     Button btnTts;
 
+    EditText edtHtml;
+    Button btnHtml;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +44,9 @@ public class MainActivity extends AppCompatActivity {
         edtTts = findViewById(R.id.edtTts);
         btnTts = findViewById(R.id.btnTts);
 
+        edtHtml = findViewById(R.id.edtHtml);
+        btnHtml = findViewById(R.id.btnHtml);
+
 
         btnTts.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,6 +57,19 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     Intent i = new Intent(getApplicationContext(), TtsActivity.class);
                     i.putExtra("text",edtTts.getText().toString());
+                    startActivity(i);
+                }
+            }
+        });
+
+        btnHtml.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if(edtTts.getText().toString() == null || edtHtml.getText().toString().trim().length() == 0) {
+                    Toast.makeText(MainActivity.this, "Se necesita una URL", Toast.LENGTH_SHORT).show();
+                } else {
+                    Intent i = new Intent(getApplicationContext(), HtmlActivity.class);
                     startActivity(i);
                 }
             }
