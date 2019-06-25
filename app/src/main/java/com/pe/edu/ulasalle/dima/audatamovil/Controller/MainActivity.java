@@ -5,6 +5,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.net.Uri;
+import android.provider.OpenableColumns;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
@@ -13,9 +16,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.pe.edu.ulasalle.dima.audatamovil.R;
+
+import org.w3c.dom.Text;
 
 public class MainActivity extends AppCompatActivity {
     private int STORAGE_PERMISSION_CODE = 1;
@@ -26,7 +32,10 @@ public class MainActivity extends AppCompatActivity {
     EditText edtHtml;
     Button btnHtml;
 
+    TextView textPdf;
     Button btnPdf;
+
+
 
 
     @Override
@@ -47,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
         edtHtml = findViewById(R.id.edtHtml);
         btnHtml = findViewById(R.id.btnHtml);
 
+        textPdf =findViewById(R.id.textPdf);
         btnPdf = findViewById(R.id.btnPdf);
 
 
@@ -87,6 +97,40 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode==1){
+            if(resultCode ==RESULT_OK){
+                Uri uri = data.getData();
+                String uriString =uri.toString();
+                String name = null;
+                if (uriString.startsWith("content://")){
+                    Cursor cursor = null;
+                    try{
+                        cursor=getContentResolver().query(uri,null,null,null,null);
+                        if(cursor!=null && cursor.moveToFirst()){
+                            name=cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
+                        }
+                    }finally{
+                        cursor.close();
+                    }
+
+                }else if(uriString.startsWith("file://")){
+                    name=uriString;
+
+                }
+                textPdf.setText(name);
+                Toast.makeText(MainActivity.this, "Respuesta del pdf:"+name, Toast.LENGTH_SHORT).show();
+                System.out.println("Respuesta del pdf:" + name);
+
+            }
+
+
+            }
+        }
 
 
     private void requestStoragePermission(){
