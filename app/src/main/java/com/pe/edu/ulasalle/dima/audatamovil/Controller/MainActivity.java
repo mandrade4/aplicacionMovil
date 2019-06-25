@@ -3,6 +3,7 @@ package com.pe.edu.ulasalle.dima.audatamovil.Controller;
 import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -29,6 +30,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
+        boolean firstStart = prefs.getBoolean("firstStart",true);
+
+        if (firstStart) {
+            //showStartDialog();
+            requestStoragePermission();
+        }
+
         edtTts = findViewById(R.id.edtTts);
         btnTts = findViewById(R.id.btnTts);
 
@@ -40,20 +49,30 @@ public class MainActivity extends AppCompatActivity {
                 if(edtTts.getText().toString() == null || edtTts.getText().toString().trim().length() == 0) {
                     Toast.makeText(MainActivity.this, "Se necesita un Texto", Toast.LENGTH_SHORT).show();
                 } else {
-                    if(ContextCompat.checkSelfPermission(MainActivity.this,
-                            Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
-                        Toast.makeText(MainActivity.this, "Ya tienes permisos", Toast.LENGTH_SHORT).show();
-                        Intent i = new Intent(getApplicationContext(), TtsActivity.class);
-                        i.putExtra("text",edtTts.getText().toString());
-                        startActivity(i);
-                    } else {
-                        requestStoragePermission();
-                    }
-
+                    Intent i = new Intent(getApplicationContext(), TtsActivity.class);
+                    i.putExtra("text",edtTts.getText().toString());
+                    startActivity(i);
                 }
-
             }
         });
+    }
+
+    private void showStartDialog(){
+        new AlertDialog.Builder(this)
+                .setTitle("Dialogo")
+                .setMessage("Esto solo se deberia mostrar una vez")
+                .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .create().show();
+
+        SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putBoolean("firstStart", false);
+        editor.apply();
     }
 
     private void requestStoragePermission(){
