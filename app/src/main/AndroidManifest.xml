@@ -22,10 +22,12 @@
         </activity>
         <activity
             android:name=".Controller.TtsActivity"
-            android:theme="@style/Pop"/>
-
-        <activity android:name=".Controller.HtmlActivity"
-            android:theme="@style/Pop"/>
+            android:theme="@style/Pop" />
+        <activity
+            android:name=".Controller.HtmlActivity"
+            android:theme="@style/Pop" />
+        <activity android:name=".Controller.PdfActivity"
+            android:theme="@style/Pop"></activity>
     </application>
 
 </manifest>

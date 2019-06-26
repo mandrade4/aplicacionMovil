@@ -106,25 +106,32 @@ public class MainActivity extends AppCompatActivity {
             if(resultCode ==RESULT_OK){
                 Uri uri = data.getData();
                 String uriString =uri.toString();
-                String name = null;
+                String namePdf = null;
                 if (uriString.startsWith("content://")){
                     Cursor cursor = null;
                     try{
                         cursor=getContentResolver().query(uri,null,null,null,null);
                         if(cursor!=null && cursor.moveToFirst()){
-                            name=cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
+                            namePdf = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
                         }
                     }finally{
                         cursor.close();
                     }
 
                 }else if(uriString.startsWith("file://")){
-                    name=uriString;
+                    namePdf = uriString;
 
                 }
-                textPdf.setText(name);
-                Toast.makeText(MainActivity.this, "Respuesta del pdf:"+name, Toast.LENGTH_SHORT).show();
-                System.out.println("Respuesta del pdf:" + name);
+
+                textPdf.setText(namePdf);
+                if(textPdf.getText().toString() != "Selecciona un PDF"){
+                    Intent i = new Intent(getApplicationContext(), PdfActivity.class);
+                    startActivity(i);
+                } else {
+                    Toast.makeText(MainActivity.this, "Debes seleccionar un pdf", Toast.LENGTH_SHORT).show();
+                }
+                Toast.makeText(MainActivity.this, "Respuesta del pdf:"+namePdf, Toast.LENGTH_SHORT).show();
+                System.out.println("Respuesta del pdf:" + namePdf);
 
             }
 
