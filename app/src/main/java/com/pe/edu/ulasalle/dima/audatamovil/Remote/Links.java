@@ -16,10 +16,10 @@ public class Links {
 
     public static TtsService getTtsService(){
         Links links = new Links();
-        return Connection.getClient("http://192.168.20.9:8080/Audata/service/").create(TtsService.class);
+        return Connection.getClient("http://192.168.60.138:8080/Audata/service/").create(TtsService.class);
     }
 
     public static PdfService getPdfService(){
-        return Connection.getClient("http://192.168.20.9:8080/Audata/service/api").create(PdfService.class);
+        return Connection.getClient("http://192.168.60.138:8080/Audata/service/api").create(PdfService.class);
     }
 }
