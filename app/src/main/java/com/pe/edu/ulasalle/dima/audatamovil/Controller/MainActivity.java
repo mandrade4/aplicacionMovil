@@ -128,6 +128,7 @@ public class MainActivity extends AppCompatActivity {
                 textPdf.setText(namePdf);
                 if(textPdf.getText().toString() != "Selecciona un PDF"){
                     Intent i = new Intent(getApplicationContext(), PdfActivity.class);
+                    i.putExtra("data", data);
                     startActivity(i);
                 } else {
                     Toast.makeText(MainActivity.this, "Debes seleccionar un pdf", Toast.LENGTH_SHORT).show();
