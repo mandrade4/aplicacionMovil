@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.pe.edu.ulasalle.dima.audatamovil.R;
+import com.pe.edu.ulasalle.dima.audatamovil.Remote.UrlActivity;
 
 import org.w3c.dom.Text;
 
@@ -48,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (firstStart) {
             requestStoragePermission();
+
         }
 
         edtTts = findViewById(R.id.edtTts);
@@ -170,6 +172,8 @@ public class MainActivity extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == STORAGE_PERMISSION_CODE) {
             if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                Intent i = new Intent(getApplicationContext(), UrlActivity.class);
+                startActivity(i);
                 Toast.makeText(this, "Permiso condedido", Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(this, "Permiso denegado", Toast.LENGTH_SHORT).show();

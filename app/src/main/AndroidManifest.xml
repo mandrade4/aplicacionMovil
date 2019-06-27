@@ -20,14 +20,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".Remote.UrlActivity"
+            android:theme="@style/Pop" />
         <activity
             android:name=".Controller.TtsActivity"
             android:theme="@style/Pop" />
         <activity
             android:name=".Controller.HtmlActivity"
             android:theme="@style/Pop" />
-        <activity android:name=".Controller.PdfActivity"
-            android:theme="@style/Pop"></activity>
+        <activity
+            android:name=".Controller.PdfActivity"
+            android:theme="@style/Pop" />
+
     </application>
 
 </manifest>
