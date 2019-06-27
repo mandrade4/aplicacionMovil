@@ -109,6 +109,7 @@ public class MainActivity extends AppCompatActivity {
                 Uri uri = data.getData();
                 String uriString =uri.toString();
                 String namePdf = null;
+                System.out.println("What is Data: " + data);
                 if (uriString.startsWith("content://")){
                     Cursor cursor = null;
                     try{
@@ -128,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
                 textPdf.setText(namePdf);
                 if(textPdf.getText().toString() != "Selecciona un PDF"){
                     Intent i = new Intent(getApplicationContext(), PdfActivity.class);
-                    i.putExtra("data", data);
+                    i.putExtra("pdf", uriString);
                     startActivity(i);
                 } else {
                     Toast.makeText(MainActivity.this, "Debes seleccionar un pdf", Toast.LENGTH_SHORT).show();

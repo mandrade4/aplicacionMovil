@@ -15,7 +15,7 @@ import retrofit2.http.Path;
 public interface PdfService {
 
     @Multipart
-    @POST("/funcion17")
-    Call<ResponseBody> mp3PdfPageInicio(@Part("file") File file, @Part("paginaInicio") String paginaInicio);
+    @POST("funcion17")
+    Call<ResponseBody> mp3PdfPageInicio(@Part("uploadedFile") File uploadedFile, @Part("paginaInicio") String paginaInicio);
 
 }
