@@ -10,19 +10,88 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="260dp"
+            android:layout_height="50dp"
             android:id="@+id/edtPdfpi"
-            android:hint="Pagina de Inicio"
-            android:layout_centerHorizontal="true"/>
+            android:background="@drawable/custome_edit_text_bg"
+            android:hint="Página de Inicio"
+            android:layout_marginTop="50dp"
+            android:singleLine="true"
+            android:layout_marginLeft="20dp"/>
+
+        <EditText
+            android:layout_width="260dp"
+            android:layout_height="50dp"
+            android:layout_below="@+id/edtPdfpi"
+            android:id="@+id/edtPdfpf"
+            android:background="@drawable/custome_edit_text_bg"
+            android:hint="Página Final"
+            android:layout_marginTop="25dp"
+            android:singleLine="true"
+            android:layout_marginLeft="20dp"/>
+
+        <EditText
+            android:layout_width="260dp"
+            android:layout_height="50dp"
+            android:layout_below="@+id/edtPdfpf"
+            android:id="@+id/edtPdfp"
+            android:background="@drawable/custome_edit_text_bg"
+            android:hint="Página"
+            android:layout_marginTop="25dp"
+            android:singleLine="true"
+            android:layout_marginLeft="20dp"/>
+        <EditText
+            android:layout_width="260dp"
+            android:layout_height="50dp"
+            android:layout_below="@+id/edtPdfp"
+            android:id="@+id/edtPdfPalabraInicio"
+            android:background="@drawable/custome_edit_text_bg"
+            android:hint="Palabra Inicio"
+            android:layout_marginTop="25dp"
+            android:singleLine="true"
+            android:layout_marginLeft="20dp"/>
+        <EditText
+            android:layout_width="260dp"
+            android:layout_height="50dp"
+            android:layout_below="@+id/edtPdfPalabraInicio"
+            android:id="@+id/edtPdfPalabraFin"
+            android:background="@drawable/custome_edit_text_bg"
+            android:hint="Palabra Fin"
+            android:layout_marginTop="25dp"
+            android:singleLine="true"
+            android:layout_marginLeft="20dp"/>
+
+        <EditText
+            android:layout_width="260dp"
+            android:layout_height="50dp"
+            android:layout_below="@+id/edtPdfPalabraFin"
+            android:id="@+id/edtPdfStopList"
+            android:background="@drawable/custome_edit_text_bg"
+            android:hint="Escribe un StopList"
+            android:layout_marginTop="25dp"
+            android:singleLine="true"
+            android:layout_marginLeft="20dp"/>
+
+        <EditText
+            android:layout_width="260dp"
+            android:layout_height="50dp"
+            android:layout_below="@+id/edtPdfStopList"
+            android:id="@+id/edtPdfBookmark"
+            android:background="@drawable/custome_edit_text_bg"
+            android:hint="Bookmark"
+            android:layout_marginTop="25dp"
+            android:singleLine="true"
+            android:layout_marginLeft="20dp"/>
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/btnEnviarPdf"
             android:layout_centerHorizontal="true"
+            android:layout_marginTop="50dp"
             android:text="Enviar"
-            android:layout_below="@+id/edtPdfpi"/>
+            android:layout_below="@+id/edtPdfBookmark"/>
     </RelativeLayout>
 
 </android.support.constraint.ConstraintLayout>

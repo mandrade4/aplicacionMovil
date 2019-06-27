@@ -16,6 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:orientation="horizontal"
+            android:layout_marginTop="50dp"
             android:layout_centerHorizontal="true">
 
             <RadioButton
@@ -31,13 +32,25 @@
                 android:text="AAC"/>
         </RadioGroup>
 
+        <EditText
+            android:layout_width="260dp"
+            android:layout_height="50dp"
+            android:layout_below="@+id/ttsRadioGroup"
+            android:id="@+id/edtHtml"
+            android:background="@drawable/custome_edit_text_bg"
+            android:hint="Escribe un título"
+            android:layout_marginTop="50dp"
+            android:singleLine="true"
+            android:layout_marginLeft="20dp"/>
+
         <Button
             android:id="@+id/btnEnviarTts"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="ENVIAR"
+            android:layout_marginTop="50dp"
             android:layout_centerHorizontal="true"
-            android:layout_below="@+id/ttsRadioGroup"/>
+            android:layout_below="@+id/edtHtml"/>
     </RelativeLayout>
 
 
