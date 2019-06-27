@@ -54,7 +54,8 @@ public class PdfActivity extends AppCompatActivity {
 
         getWindow().setAttributes(params);
         //File data =  (File) getIntent().getExtras().get("data");
-        pdfService = Links.getPdfService();
+        String ip = getIntent().getStringExtra("ip");
+        pdfService = Links.getPdfService(ip);
 
         edtPdfpi = findViewById(R.id.edtPdfpi);
         btnEnviarPdf = findViewById(R.id.btnEnviarPdf);

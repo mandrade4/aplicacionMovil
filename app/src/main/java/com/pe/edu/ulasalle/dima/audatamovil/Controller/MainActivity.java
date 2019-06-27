@@ -26,6 +26,7 @@ import org.w3c.dom.Text;
 
 public class MainActivity extends AppCompatActivity {
     private int STORAGE_PERMISSION_CODE = 1;
+    private int CODE_IP = 1;
 
     EditText edtTts;
     Button btnTts;
@@ -36,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     TextView textPdf;
     Button btnPdf;
 
+    Button btnOpenIp;
 
 
 
@@ -49,7 +51,6 @@ public class MainActivity extends AppCompatActivity {
 
         if (firstStart) {
             requestStoragePermission();
-
         }
 
         edtTts = findViewById(R.id.edtTts);
@@ -61,6 +62,15 @@ public class MainActivity extends AppCompatActivity {
         textPdf =findViewById(R.id.textPdf);
         btnPdf = findViewById(R.id.btnPdf);
 
+        btnOpenIp = findViewById(R.id.btnOpenIp);
+
+        btnOpenIp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), UrlActivity.class);
+                startActivity(i);
+            }
+        });
 
         btnTts.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,8 +79,10 @@ public class MainActivity extends AppCompatActivity {
                 if(edtTts.getText().toString() == null || edtTts.getText().toString().trim().length() == 0) {
                     Toast.makeText(MainActivity.this, "Se necesita un Texto", Toast.LENGTH_SHORT).show();
                 } else {
+                    String ip = getIntent().getStringExtra("ip");
                     Intent i = new Intent(getApplicationContext(), TtsActivity.class);
                     i.putExtra("text",edtTts.getText().toString());
+                    i.putExtra("ip",ip);
                     startActivity(i);
                 }
             }
@@ -128,8 +140,10 @@ public class MainActivity extends AppCompatActivity {
 
                 textPdf.setText(namePdf);
                 if(textPdf.getText().toString() != "Selecciona un PDF"){
+                    String ip = getIntent().getStringExtra("ip");
                     Intent i = new Intent(getApplicationContext(), PdfActivity.class);
                     i.putExtra("pdf", uriString);
+                    i.putExtra("ipd", ip);
                     startActivity(i);
                 } else {
                     Toast.makeText(MainActivity.this, "Debes seleccionar un pdf", Toast.LENGTH_SHORT).show();
@@ -174,9 +188,12 @@ public class MainActivity extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == STORAGE_PERMISSION_CODE) {
             if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                Intent i = new Intent(getApplicationContext(), UrlActivity.class);
-                startActivity(i);
                 Toast.makeText(this, "Permiso condedido", Toast.LENGTH_SHORT).show();
+                Integer code_ip = getIntent().getIntExtra("code_ip",1);
+                if(CODE_IP == code_ip){
+                    Intent i = new Intent(getApplicationContext(), UrlActivity.class);
+                    startActivity(i);
+                }
             } else {
                 Toast.makeText(this, "Permiso denegado", Toast.LENGTH_SHORT).show();
             }

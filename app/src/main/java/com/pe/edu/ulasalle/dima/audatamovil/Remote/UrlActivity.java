@@ -1,5 +1,6 @@
 package com.pe.edu.ulasalle.dima.audatamovil.Remote;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -10,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.pe.edu.ulasalle.dima.audatamovil.Controller.MainActivity;
 import com.pe.edu.ulasalle.dima.audatamovil.R;
 
 public class UrlActivity extends AppCompatActivity {
@@ -44,10 +46,13 @@ public class UrlActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String ip = edtIp.getText().toString();
-                Links links = new Links();
-                links.setURL(ip);
-                Toast.makeText(UrlActivity.this, "Ip: "+ links.getURL(), Toast.LENGTH_SHORT).show();
+                Integer CODE_IP = 2;
+                Toast.makeText(UrlActivity.this, "Ip: "+ ip, Toast.LENGTH_SHORT).show();
                 Toast.makeText(UrlActivity.this, "Ip seteada correctamente", Toast.LENGTH_SHORT).show();
+                Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                i.putExtra("ip", ip);
+                i.putExtra("code_ip", CODE_IP);
+                startActivity(i);
             }
         });
     }

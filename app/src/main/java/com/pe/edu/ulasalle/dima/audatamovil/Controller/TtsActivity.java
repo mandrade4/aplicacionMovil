@@ -58,7 +58,9 @@ public class TtsActivity extends AppCompatActivity {
         ttsRadioGroup = findViewById(R.id.ttsRadioGroup);
         btnEnviarTts = findViewById(R.id.btnEnviarTts);
 
-        ttsService = Links.getTtsService();
+
+        String ip = getIntent().getStringExtra("ip");
+        ttsService = Links.getTtsService(ip);
 
         btnEnviarTts.setOnClickListener(new View.OnClickListener() {
             @Override
