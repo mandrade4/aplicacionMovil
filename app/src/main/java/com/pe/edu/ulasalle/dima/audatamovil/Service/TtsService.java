@@ -12,4 +12,7 @@ public interface TtsService {
 
     @GET("tts/talk/{text}")
     Call<ResponseBody> sendText(@Path("text") String text);
+
+    @GET("tts/talk2/{text}")
+    Call<ResponseBody> sendText2(@Path("text") String text);
 }
