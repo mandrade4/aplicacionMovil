@@ -1,12 +1,16 @@
 package com.pe.edu.ulasalle.dima.audatamovil.Controller;
 
 import android.Manifest;
+import android.content.ContentUris;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Environment;
+import android.provider.DocumentsContract;
+import android.provider.MediaStore;
 import android.provider.OpenableColumns;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -23,6 +27,8 @@ import com.pe.edu.ulasalle.dima.audatamovil.R;
 import com.pe.edu.ulasalle.dima.audatamovil.Remote.UrlActivity;
 
 import org.w3c.dom.Text;
+
+import java.io.File;
 
 public class MainActivity extends AppCompatActivity {
     private int STORAGE_PERMISSION_CODE = 1;
@@ -139,11 +145,15 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 textPdf.setText(namePdf);
+                System.out.println("Uri string: "+ uriString);
                 if(textPdf.getText().toString() != "Selecciona un PDF"){
                     String ip = getIntent().getStringExtra("ip");
                     Intent i = new Intent(getApplicationContext(), PdfActivity.class);
-                    i.putExtra("pdf", uriString);
-                    i.putExtra("ipd", ip);
+                    String TEMP_DIR_PATH = Environment.getExternalStorageDirectory().getPath();
+                    String rutapdf = TEMP_DIR_PATH + File.separator +  "Download" + File.separator + namePdf;
+                    System.out.println("Ruda pdf: " + rutapdf);
+                    i.putExtra("pdf", rutapdf);
+                    i.putExtra("ip", ip);
                     startActivity(i);
                 } else {
                     Toast.makeText(MainActivity.this, "Debes seleccionar un pdf", Toast.LENGTH_SHORT).show();
@@ -156,7 +166,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         }
-
 
     private void requestStoragePermission(){
         if(ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)){

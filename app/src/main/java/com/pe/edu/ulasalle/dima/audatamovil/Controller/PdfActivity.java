@@ -23,6 +23,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.UUID;
 
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -65,17 +67,18 @@ public class PdfActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = getIntent();
                 String pdf = intent.getStringExtra("pdf");
-                Uri fileUri = Uri.parse(pdf);
                 String pageInicio = edtPdfpi.getText().toString();
-                File pdfFile = new File(pdf);
-                sendPdftoMp3withPageStart(pdfFile,pageInicio);
+                File uploadedFile = new File(pdf);
+                sendPdftoMp3withPageStart(uploadedFile,pageInicio);
             }
         });
 
     }
 
     public void sendPdftoMp3withPageStart(File pdf, String paginaInicio){
-        Call<ResponseBody> call = pdfService.mp3PdfPageInicio(pdf, paginaInicio);
+        RequestBody filePdf = RequestBody.create(MediaType.parse("application/pdf"), pdf);
+        RequestBody pageIni = RequestBody.create(MediaType.parse("text/plain"), paginaInicio);
+        Call<ResponseBody> call = pdfService.mp3PdfPageInicio(filePdf, pageIni);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
