@@ -1,9 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/pop_bg"
     tools:context=".Controller.HtmlActivity">
-</android.support.constraint.ConstraintLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <EditText
+            android:layout_width="260dp"
+            android:layout_height="50dp"
+            android:id="@+id/edtHtmlTag"
+            android:background="@drawable/custome_edit_text_bg"
+            android:hint="Ingresar tag..."
+            android:layout_marginTop="50dp"
+            android:singleLine="true"
+            android:layout_marginLeft="20dp"/>
+
+        <EditText
+            android:layout_width="260dp"
+            android:layout_height="50dp"
+            android:layout_below="@+id/edtHtmlTag"
+            android:id="@+id/edtHtmlTagInicio"
+            android:background="@drawable/custome_edit_text_bg"
+            android:hint="Ingresar tag inicio"
+            android:layout_marginTop="50dp"
+            android:singleLine="true"
+            android:layout_marginLeft="20dp"/>
+
+        <EditText
+            android:layout_width="260dp"
+            android:layout_height="50dp"
+            android:layout_below="@+id/edtHtmlTagInicio"
+            android:id="@+id/edtHtmlTagFin"
+            android:background="@drawable/custome_edit_text_bg"
+            android:hint="Ingresar tag final"
+            android:layout_marginTop="50dp"
+            android:singleLine="true"
+            android:layout_marginLeft="20dp"/>
+
+        <EditText
+            android:layout_width="260dp"
+            android:layout_height="50dp"
+            android:layout_below="@+id/edtHtmlTagFin"
+            android:id="@+id/edtHtmlTagDivisor"
+            android:background="@drawable/custome_edit_text_bg"
+            android:hint="Ingresar divisor"
+            android:layout_marginTop="50dp"
+            android:singleLine="true"
+            android:layout_marginLeft="20dp"/>
+
+        <EditText
+            android:layout_width="260dp"
+            android:layout_height="50dp"
+            android:layout_below="@+id/edtHtmlTagDivisor"
+            android:id="@+id/edtHtmlPI"
+            android:background="@drawable/custome_edit_text_bg"
+            android:hint="Ingresar palabra inicial"
+            android:layout_marginTop="50dp"
+            android:singleLine="true"
+            android:layout_marginLeft="20dp"/>
+
+        <EditText
+            android:layout_width="260dp"
+            android:layout_height="50dp"
+            android:layout_below="@+id/edtHtmlPI"
+            android:id="@+id/edtHtmlPF"
+            android:background="@drawable/custome_edit_text_bg"
+            android:hint="Ingresar palabra final"
+            android:layout_marginTop="50dp"
+            android:singleLine="true"
+            android:layout_marginLeft="20dp"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnEnviarHTML"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="50dp"
+            android:text="Enviar"
+            android:layout_below="@+id/edtHtmlPF"/>
+
+
+    </RelativeLayout>
+</ScrollView>
