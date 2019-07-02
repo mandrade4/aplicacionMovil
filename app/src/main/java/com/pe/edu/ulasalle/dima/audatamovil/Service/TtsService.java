@@ -10,9 +10,9 @@ import retrofit2.http.Path;
 
 public interface TtsService {
 
-    @GET("tts/talk/{text}")
+    @GET("funcion1/{text}")
     Call<ResponseBody> sendText(@Path("text") String text);
 
-    @GET("tts/talk2/{text}")
+    @GET("funcion2/{text}")
     Call<ResponseBody> sendText2(@Path("text") String text);
 }

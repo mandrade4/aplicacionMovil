@@ -35,6 +35,7 @@ public class PdfActivity extends AppCompatActivity {
     PdfService pdfService;
 
     EditText edtPdfpi;
+    EditText edtPdfpf;
     Button btnEnviarPdf;
 
     @Override
@@ -55,21 +56,29 @@ public class PdfActivity extends AppCompatActivity {
         params.y = -20;
 
         getWindow().setAttributes(params);
-        //File data =  (File) getIntent().getExtras().get("data");
+
         String ip = getIntent().getStringExtra("ip");
         pdfService = Links.getPdfService(ip);
 
         edtPdfpi = findViewById(R.id.edtPdfpi);
+        edtPdfpf = findViewById(R.id.edtPdfpf);
         btnEnviarPdf = findViewById(R.id.btnEnviarPdf);
 
         btnEnviarPdf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = getIntent();
-                String pdf = intent.getStringExtra("pdf");
-                String pageInicio = edtPdfpi.getText().toString();
+
+                String pdf =  getIntent().getStringExtra("pdf");
                 File uploadedFile = new File(pdf);
-                sendPdftoMp3withPageStart(uploadedFile,pageInicio);
+
+                String pageInicio = edtPdfpi.getText().toString();
+                String pageFin = edtPdfpf.getText().toString();
+
+                if(edtPdfpi.getText().toString() != null && edtPdfpf.getText().toString().trim().length() == 0){
+                    sendPdftoMp3withPageStart(uploadedFile,pageInicio);
+                } else if(edtPdfpi.getText().toString() != null && edtPdfpf.getText().toString() !=null){
+                    sendPdftoMp3withPageStartandPageEnd(uploadedFile, pageInicio, pageFin);
+                }
             }
         });
 
@@ -92,7 +101,38 @@ public class PdfActivity extends AppCompatActivity {
                     }
 
                 } else {
-                    Toast.makeText(PdfActivity.this, "Error conexion con el Servidor", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PdfActivity.this, "Error conexion con el Servidor 1", Toast.LENGTH_SHORT).show();
+                    Integer error = response.code();
+                    Toast.makeText(PdfActivity.this, "Error " + error, Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.e("ERROR: ", t.getMessage());
+            }
+        });
+    }
+
+    public void sendPdftoMp3withPageStartandPageEnd(File pdf, String paginaInicio, String paginaFin){
+        RequestBody filePdf = RequestBody.create(MediaType.parse("application/pdf"), pdf);
+        RequestBody pageIni = RequestBody.create(MediaType.parse("text/plain"), paginaInicio);
+        RequestBody pageFin = RequestBody.create(MediaType.parse("text/plain"), paginaFin);
+        Call<ResponseBody> call = pdfService.mp3PdfPageInicioPageFin(filePdf, pageIni, pageFin);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if(response.isSuccessful()){
+                    Toast.makeText(PdfActivity.this,"Pdf enviado satisfactoriamente", Toast.LENGTH_SHORT).show();
+                    Log.i("Respuesta to String:", response.body().toString());
+                    try {
+                        saveFileAudio(response.body().bytes());
+                    } catch (IOException e) {
+                        Log.i("Error audio:", e.toString());
+                    }
+
+                } else {
+                    Toast.makeText(PdfActivity.this, "Error conexion con el Servidor 2", Toast.LENGTH_SHORT).show();
                     Integer error = response.code();
                     Toast.makeText(PdfActivity.this, "Error " + error, Toast.LENGTH_SHORT).show();
                 }

@@ -19,4 +19,7 @@ public interface PdfService {
     @POST("funcion17")
     Call<ResponseBody> mp3PdfPageInicio(@Part("uploadedFile") RequestBody uploadedFile, @Part("paginaInicio") RequestBody paginaInicio);
 
+    @Multipart
+    @POST("funcion001")
+    Call<ResponseBody> mp3PdfPageInicioPageFin(@Part("uploadedFile") RequestBody uploadedFile, @Part("paginaInicio") RequestBody paginaInicio, @Part("paginaFin") RequestBody paginaFin);
 }
