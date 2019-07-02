@@ -24,6 +24,14 @@ public interface PdfService {
     Call<ResponseBody> mp3PdfPageInicioPageFin(@Part("uploadedFile") RequestBody uploadedFile, @Part("paginaInicio") RequestBody paginaInicio, @Part("paginaFin") RequestBody paginaFin);
 
     @Multipart
-    @POST("funcion20")
+    @POST("funcion18")
     Call<ResponseBody> mp3PdfPagIPagFPalIPalF(@Part("uploadedFile") RequestBody uploadedFile, @Part("paginaInicio") RequestBody paginaInicio, @Part("paginaFin") RequestBody paginaFin, @Part("pini") RequestBody pini, @Part("pfin") RequestBody pfin);
+
+    @Multipart
+    @POST("funcion20")
+    Call<ResponseBody> mp3PdfPagIPagFPalIPalFsL(@Part("uploadedFile") RequestBody uploadedFile, @Part("paginaInicio") RequestBody paginaInicio, @Part("paginaFin") RequestBody paginaFin, @Part("pini") RequestBody pini, @Part("pfin") RequestBody pfin, @Part("sL") RequestBody sL);
+
+    @Multipart
+    @POST("funcion19")
+    Call<ResponseBody> mp3PdfBooMarsL(@Part("uploadedFile") RequestBody uploadedFile,@Part("bookmark") RequestBody bookmark, @Part("sL") RequestBody sL);
 }

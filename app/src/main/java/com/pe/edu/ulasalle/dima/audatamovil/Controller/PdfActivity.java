@@ -38,6 +38,8 @@ public class PdfActivity extends AppCompatActivity {
     EditText edtPdfpf;
     EditText edtPdfPalabraInicio;
     EditText edtPdfPalabraFin;
+    EditText edtPdfBookmark;
+    EditText edtPdfStopList;
 
     Button btnEnviarPdf;
 
@@ -67,6 +69,8 @@ public class PdfActivity extends AppCompatActivity {
         edtPdfpf = findViewById(R.id.edtPdfpf);
         edtPdfPalabraInicio = findViewById(R.id.edtPdfPalabraInicio);
         edtPdfPalabraFin = findViewById(R.id.edtPdfPalabraFin);
+        edtPdfBookmark = findViewById(R.id.edtPdfBookmark);
+        edtPdfStopList = findViewById(R.id.edtPdfStopList);
 
         btnEnviarPdf = findViewById(R.id.btnEnviarPdf);
 
@@ -81,13 +85,24 @@ public class PdfActivity extends AppCompatActivity {
                 String pageFin = edtPdfpf.getText().toString();
                 String palInicio = edtPdfPalabraInicio.getText().toString();
                 String palFin = edtPdfPalabraFin.getText().toString();
+                String bookmark = edtPdfBookmark.getText().toString();
+                String stopList = edtPdfStopList.getText().toString();
 
-                if(edtPdfpi.getText().toString() != null && edtPdfpf.getText().toString().trim().length() == 0){
+                if(edtPdfpi.getText().toString() != null && edtPdfpf.getText().toString().trim().length() == 0 && edtPdfPalabraInicio.getText().toString().trim().length() == 0 && edtPdfPalabraFin.getText().toString().trim().length() == 0 && edtPdfStopList.getText().toString().trim().length() == 0 && edtPdfBookmark.getText().toString().trim().length() == 0 ){
+                    System.out.println("Func1");
                     sendPdftoMp3withPageStart(uploadedFile,pageInicio);
-                } else if(edtPdfpi.getText().toString() != null && edtPdfpf.getText().toString() !=null && edtPdfPalabraInicio.getText().toString().trim().length() == 0 && edtPdfPalabraFin.getText().toString().trim().length() == 0){
+                } else if(edtPdfpi.getText().toString() != null && edtPdfpf.getText().toString() !=null && edtPdfPalabraInicio.getText().toString().trim().length() == 0 && edtPdfPalabraFin.getText().toString().trim().length() == 0 && edtPdfStopList.getText().toString().trim().length() == 0 && edtPdfBookmark.getText().toString().trim().length() == 0 ){
+                    System.out.println("Func2");
                     sendPdftoMp3withPageStartandPageEnd(uploadedFile, pageInicio, pageFin);
-                } else if(edtPdfpi.getText().toString() != null && edtPdfpf.getText().toString() !=null && edtPdfPalabraInicio.getText().toString() != null && edtPdfPalabraFin.getText().toString()!= null) {
+                } else if(edtPdfpi.getText().toString() != null && edtPdfpf.getText().toString() !=null && edtPdfPalabraInicio.getText().toString() != null && edtPdfPalabraFin.getText().toString()!= null && edtPdfStopList.getText().toString().trim().length() == 0 && edtPdfBookmark.getText().toString().trim().length() == 0) {
+                    System.out.println("Func3");
                     sendPdftoMp3withPagStPagEnWorStWorEnd(uploadedFile,pageInicio, pageFin, palInicio, palFin);
+                } else if(edtPdfpi.getText().toString() != null && edtPdfpf.getText().toString() !=null && edtPdfPalabraInicio.getText().toString() != null && edtPdfPalabraFin.getText().toString()!= null && edtPdfStopList.getText().toString()!= null && edtPdfBookmark.getText().toString().trim().length() == 0) {
+                    System.out.println("Func4");
+                    sendPdftoMp3withPagStPagEnWorStWorEndStoList(uploadedFile,pageInicio, pageFin, palInicio, palFin, stopList);
+                } else if(edtPdfBookmark.getText().toString() != null && edtPdfStopList.getText().toString() != null && edtPdfpi.getText().toString().trim().length() == 0 && edtPdfpf.getText().toString().trim().length() == 0 && edtPdfPalabraInicio.getText().toString().trim().length() == 0 && edtPdfPalabraFin.getText().toString().trim().length() == 0){
+                    System.out.println("Func5");
+                    sendPdftoMp3WithBmSl(uploadedFile, bookmark, stopList);
                 }
             }
         });
@@ -163,6 +178,73 @@ public class PdfActivity extends AppCompatActivity {
         RequestBody palFin = RequestBody.create(MediaType.parse("text/plain"), palabraFin);
 
         Call<ResponseBody> call = pdfService.mp3PdfPagIPagFPalIPalF(filePdf, pageIni, pageFin, palIni, palFin);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if(response.isSuccessful()){
+                    Toast.makeText(PdfActivity.this,"Pdf enviado satisfactoriamente", Toast.LENGTH_SHORT).show();
+                    Log.i("Respuesta to String:", response.body().toString());
+                    try {
+                        saveFileAudio(response.body().bytes());
+                    } catch (IOException e) {
+                        Log.i("Error audio:", e.toString());
+                    }
+                } else {
+                    Toast.makeText(PdfActivity.this, "Error conexion con el Servidor 2", Toast.LENGTH_SHORT).show();
+                    Integer error = response.code();
+                    Toast.makeText(PdfActivity.this, "Error " + error, Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.e("ERROR: ", t.getMessage());
+            }
+        });
+
+    }
+
+    public void sendPdftoMp3withPagStPagEnWorStWorEndStoList(File pdf, String paginaInicio, String paginaFin, String palabraInicio, String palabraFin, String stopList){
+        RequestBody filePdf = RequestBody.create(MediaType.parse("application/pdf"), pdf);
+        RequestBody pageIni = RequestBody.create(MediaType.parse("text/plain"), paginaInicio);
+        RequestBody pageFin = RequestBody.create(MediaType.parse("text/plain"), paginaFin);
+        RequestBody palIni = RequestBody.create(MediaType.parse("text/plain"), palabraInicio);
+        RequestBody palFin = RequestBody.create(MediaType.parse("text/plain"), palabraFin);
+        RequestBody sL = RequestBody.create(MediaType.parse("text/plain"), stopList);
+
+        Call<ResponseBody> call = pdfService.mp3PdfPagIPagFPalIPalFsL(filePdf, pageIni, pageFin, palIni, palFin, sL);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if(response.isSuccessful()){
+                    Toast.makeText(PdfActivity.this,"Pdf enviado satisfactoriamente", Toast.LENGTH_SHORT).show();
+                    Log.i("Respuesta to String:", response.body().toString());
+                    try {
+                        saveFileAudio(response.body().bytes());
+                    } catch (IOException e) {
+                        Log.i("Error audio:", e.toString());
+                    }
+                } else {
+                    Toast.makeText(PdfActivity.this, "Error conexion con el Servidor 2", Toast.LENGTH_SHORT).show();
+                    Integer error = response.code();
+                    Toast.makeText(PdfActivity.this, "Error " + error, Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.e("ERROR: ", t.getMessage());
+            }
+        });
+
+    }
+
+    public void sendPdftoMp3WithBmSl(File pdf, String bookmark, String stopList){
+        RequestBody filePdf = RequestBody.create(MediaType.parse("application/pdf"), pdf);
+        RequestBody bm = RequestBody.create(MediaType.parse("text/plain"), bookmark);
+        RequestBody sL = RequestBody.create(MediaType.parse("text/plain"), stopList);
+
+        Call<ResponseBody> call = pdfService.mp3PdfBooMarsL(filePdf,bm,sL);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
