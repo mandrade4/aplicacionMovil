@@ -36,6 +36,9 @@ public class PdfActivity extends AppCompatActivity {
 
     EditText edtPdfpi;
     EditText edtPdfpf;
+    EditText edtPdfPalabraInicio;
+    EditText edtPdfPalabraFin;
+
     Button btnEnviarPdf;
 
     @Override
@@ -62,6 +65,9 @@ public class PdfActivity extends AppCompatActivity {
 
         edtPdfpi = findViewById(R.id.edtPdfpi);
         edtPdfpf = findViewById(R.id.edtPdfpf);
+        edtPdfPalabraInicio = findViewById(R.id.edtPdfPalabraInicio);
+        edtPdfPalabraFin = findViewById(R.id.edtPdfPalabraFin);
+
         btnEnviarPdf = findViewById(R.id.btnEnviarPdf);
 
         btnEnviarPdf.setOnClickListener(new View.OnClickListener() {
@@ -73,11 +79,15 @@ public class PdfActivity extends AppCompatActivity {
 
                 String pageInicio = edtPdfpi.getText().toString();
                 String pageFin = edtPdfpf.getText().toString();
+                String palInicio = edtPdfPalabraInicio.getText().toString();
+                String palFin = edtPdfPalabraFin.getText().toString();
 
                 if(edtPdfpi.getText().toString() != null && edtPdfpf.getText().toString().trim().length() == 0){
                     sendPdftoMp3withPageStart(uploadedFile,pageInicio);
-                } else if(edtPdfpi.getText().toString() != null && edtPdfpf.getText().toString() !=null){
+                } else if(edtPdfpi.getText().toString() != null && edtPdfpf.getText().toString() !=null && edtPdfPalabraInicio.getText().toString().trim().length() == 0 && edtPdfPalabraFin.getText().toString().trim().length() == 0){
                     sendPdftoMp3withPageStartandPageEnd(uploadedFile, pageInicio, pageFin);
+                } else if(edtPdfpi.getText().toString() != null && edtPdfpf.getText().toString() !=null && edtPdfPalabraInicio.getText().toString() != null && edtPdfPalabraFin.getText().toString()!= null) {
+                    sendPdftoMp3withPagStPagEnWorStWorEnd(uploadedFile,pageInicio, pageFin, palInicio, palFin);
                 }
             }
         });
@@ -143,6 +153,40 @@ public class PdfActivity extends AppCompatActivity {
                 Log.e("ERROR: ", t.getMessage());
             }
         });
+    }
+
+    public void sendPdftoMp3withPagStPagEnWorStWorEnd(File pdf, String paginaInicio, String paginaFin, String palabraInicio, String palabraFin){
+        RequestBody filePdf = RequestBody.create(MediaType.parse("application/pdf"), pdf);
+        RequestBody pageIni = RequestBody.create(MediaType.parse("text/plain"), paginaInicio);
+        RequestBody pageFin = RequestBody.create(MediaType.parse("text/plain"), paginaFin);
+        RequestBody palIni = RequestBody.create(MediaType.parse("text/plain"), palabraInicio);
+        RequestBody palFin = RequestBody.create(MediaType.parse("text/plain"), palabraFin);
+
+        Call<ResponseBody> call = pdfService.mp3PdfPagIPagFPalIPalF(filePdf, pageIni, pageFin, palIni, palFin);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if(response.isSuccessful()){
+                    Toast.makeText(PdfActivity.this,"Pdf enviado satisfactoriamente", Toast.LENGTH_SHORT).show();
+                    Log.i("Respuesta to String:", response.body().toString());
+                    try {
+                        saveFileAudio(response.body().bytes());
+                    } catch (IOException e) {
+                        Log.i("Error audio:", e.toString());
+                    }
+                } else {
+                    Toast.makeText(PdfActivity.this, "Error conexion con el Servidor 2", Toast.LENGTH_SHORT).show();
+                    Integer error = response.code();
+                    Toast.makeText(PdfActivity.this, "Error " + error, Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.e("ERROR: ", t.getMessage());
+            }
+        });
+
     }
 
     private void saveFileAudio(byte[] mp3SoundByteArray) {

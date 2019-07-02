@@ -22,4 +22,8 @@ public interface PdfService {
     @Multipart
     @POST("funcion001")
     Call<ResponseBody> mp3PdfPageInicioPageFin(@Part("uploadedFile") RequestBody uploadedFile, @Part("paginaInicio") RequestBody paginaInicio, @Part("paginaFin") RequestBody paginaFin);
+
+    @Multipart
+    @POST("funcion20")
+    Call<ResponseBody> mp3PdfPagIPagFPalIPalF(@Part("uploadedFile") RequestBody uploadedFile, @Part("paginaInicio") RequestBody paginaInicio, @Part("paginaFin") RequestBody paginaFin, @Part("pini") RequestBody pini, @Part("pfin") RequestBody pfin);
 }
