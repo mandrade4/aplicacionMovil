@@ -16,4 +16,11 @@ public interface HtmlService {
     @POST("funcionhtml2")
     Call<ResponseBody> mp3HtmlTagContents(@Part("uploadedFile2")RequestBody uploadFile2,@Part("tag")RequestBody tag);
 
+    @Multipart
+    @POST("funcionhtml3")
+    Call<ResponseBody> mp3HtmlTagSLTCL(@Part("uploadedFile2")RequestBody uploadFile2,@Part("tag")RequestBody tag,@Part("stL")RequestBody stL,@Part("stcL")RequestBody stcL);
+
+    @Multipart
+    @POST("funcionhtml4")
+    Call<ResponseBody> mp3HtmlDivisor(@Part("uploadedFile2")RequestBody uploadFile2,@Part("divisor")RequestBody divisor);
 }

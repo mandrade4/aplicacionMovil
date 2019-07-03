@@ -33,7 +33,9 @@ public class HtmlActivity extends AppCompatActivity {
     HtmlService htmlService;
     Button btnEnviarHTML;
     EditText edtHtmlTag;
-
+    EditText edtHtmlStopList;
+    EditText edtHtmlStopTagContentList;
+    EditText edtHtmlTagDivisor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,21 +62,37 @@ public class HtmlActivity extends AppCompatActivity {
         htmlService = Links.getHtmlService(ip);
         btnEnviarHTML=findViewById(R.id.btnEnviarHTML);
         edtHtmlTag=findViewById(R.id.edtHtmlTag);
+        edtHtmlStopList=findViewById(R.id.edtHtmlStopList);
+        edtHtmlStopTagContentList=findViewById(R.id.edtHtmlStopTagContentList);
+        edtHtmlTagDivisor=findViewById(R.id.edtHtmlTagDivisor);
 
         btnEnviarHTML.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String url=getIntent().getStringExtra("url");
                 String tag= edtHtmlTag.getText().toString();
+                String stopTag= edtHtmlStopList.getText().toString();
+                String contentTagList= edtHtmlStopTagContentList.getText().toString();
+                String divisor=edtHtmlTagDivisor.getText().toString();
+
                 System.out.println("papa"+url);
-                if(edtHtmlTag.getText().toString().trim().length()==0){
-                        sendHtmlToMp3(url);
-                }else if(edtHtmlTag.getText().toString() != null){
+                if(edtHtmlTag.getText().toString().trim().length() == 0 && edtHtmlTagDivisor.getText().toString().trim().length()!=0 && edtHtmlStopList.getText().toString().trim().length()==0 && edtHtmlStopTagContentList.getText().toString().trim().length()==0 ) {
+                    sendHtmlMp3Divisor(url,divisor);
+                    System.out.println("Func mp3 divisor");}
+                else if(edtHtmlTag.getText().toString().trim().length() != 0 && edtHtmlStopList.getText().toString().trim().length()==0 && edtHtmlStopTagContentList.getText().toString().trim().length()==0 && edtHtmlTagDivisor.getText().toString().trim().length()==0){
                         sendHtmlToMp3Tag(url,tag);
+                    System.out.println("Func solo mp3 tag");
+                }else if(edtHtmlTag.getText().toString().trim().length() != 0 && edtHtmlStopList.getText().toString().trim().length()!=0 && edtHtmlStopTagContentList.getText().toString().trim().length()!=0 && edtHtmlTagDivisor.getText().toString().trim().length()==0){
+                    sendHtmlToMp3TagStopListContentTag(url,tag,stopTag,contentTagList);
+                    System.out.println("Func mp3 tagStopContent");
+                }else if(edtHtmlTag.getText().toString().trim().length()==0 && edtHtmlStopList.getText().toString().trim().length()==0 && edtHtmlStopTagContentList.getText().toString().trim().length()==0 && edtHtmlTagDivisor.getText().toString().trim().length()==0){
+                    sendHtmlToMp3(url);
+                    System.out.println("Func solo mp3");
                 }
             }
         });
     }
+
 
     public void sendHtmlToMp3(String url){
         RequestBody urlHtml = RequestBody.create(MediaType.parse("text/plain"), url);
@@ -104,7 +122,37 @@ public class HtmlActivity extends AppCompatActivity {
             }
         });
     }
+    public void sendHtmlToMp3TagStopListContentTag(String url,String tag,String stoplist,String contentTagList){
+        RequestBody urlHtml = RequestBody.create(MediaType.parse("text/plain"), url);
+        RequestBody tagHtml = RequestBody.create(MediaType.parse("text/plain"), tag);
+        RequestBody stopTagHtml = RequestBody.create(MediaType.parse("text/plain"), stoplist);
+        RequestBody contentTagListHtml = RequestBody.create(MediaType.parse("text/plain"), contentTagList);
+        Call<ResponseBody> call=htmlService.mp3HtmlTagSLTCL(urlHtml,tagHtml,stopTagHtml,contentTagListHtml);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if(response.isSuccessful()){
+                    Toast.makeText(HtmlActivity.this,"Url enviada satisfactoriamente", Toast.LENGTH_SHORT).show();
+                    Log.i("Respuesta to String:", response.body().toString());
+                    try {
+                        saveFileAudio(response.body().bytes());
+                    } catch (IOException e) {
+                        Log.i("Error audio:", e.toString());
+                    }
 
+                } else {
+                    Toast.makeText(HtmlActivity.this, "Error conexion con el Servidor 2", Toast.LENGTH_SHORT).show();
+                    Integer error = response.code();
+                    Toast.makeText(HtmlActivity.this, "Error " + error, Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.e("ERROR: ", t.getMessage());
+            }
+        });
+    }
     public void sendHtmlToMp3Tag(String url,String tag){
         RequestBody urlHtml = RequestBody.create(MediaType.parse("text/plain"), url);
         RequestBody tagHtml = RequestBody.create(MediaType.parse("text/plain"), tag);
@@ -133,6 +181,38 @@ public class HtmlActivity extends AppCompatActivity {
                 Log.e("ERROR: ", t.getMessage());
             }
         });
+
+    }
+
+    public void sendHtmlMp3Divisor(String url,String divisor){
+        RequestBody urlHtml = RequestBody.create(MediaType.parse("text/plain"), url);
+        RequestBody divisorHtml = RequestBody.create(MediaType.parse("text/plain"), divisor);
+        Call<ResponseBody> call=htmlService.mp3HtmlDivisor(urlHtml,divisorHtml);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if(response.isSuccessful()){
+                    Toast.makeText(HtmlActivity.this,"Url enviada satisfactoriamente", Toast.LENGTH_SHORT).show();
+                    Log.i("Respuesta to String:", response.body().toString());
+                    try {
+                        saveFileAudio(response.body().bytes());
+                    } catch (IOException e) {
+                        Log.i("Error audio:", e.toString());
+                    }
+
+                } else {
+                    Toast.makeText(HtmlActivity.this, "Error conexion con el Servidor 2", Toast.LENGTH_SHORT).show();
+                    Integer error = response.code();
+                    Toast.makeText(HtmlActivity.this, "Error " + error, Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.e("ERROR: ", t.getMessage());
+            }
+        });
+
 
     }
 

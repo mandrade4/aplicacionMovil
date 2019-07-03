@@ -20,11 +20,30 @@
             android:layout_marginTop="50dp"
             android:singleLine="true"
             android:layout_marginLeft="20dp"/>
-
         <EditText
             android:layout_width="260dp"
             android:layout_height="50dp"
             android:layout_below="@+id/edtHtmlTag"
+            android:id="@+id/edtHtmlStopList"
+            android:background="@drawable/custome_edit_text_bg"
+            android:hint="Ingresar StopList"
+            android:layout_marginTop="50dp"
+            android:singleLine="true"
+            android:layout_marginLeft="20dp"/>
+        <EditText
+            android:layout_width="260dp"
+            android:layout_height="50dp"
+            android:layout_below="@+id/edtHtmlStopList"
+            android:id="@+id/edtHtmlStopTagContentList"
+            android:background="@drawable/custome_edit_text_bg"
+            android:hint="Ingresar Stop Tag Content List"
+            android:layout_marginTop="50dp"
+            android:singleLine="true"
+            android:layout_marginLeft="20dp"/>
+        <EditText
+            android:layout_width="260dp"
+            android:layout_height="50dp"
+            android:layout_below="@+id/edtHtmlStopTagContentList"
             android:id="@+id/edtHtmlTagInicio"
             android:background="@drawable/custome_edit_text_bg"
             android:hint="Ingresar tag inicio"
