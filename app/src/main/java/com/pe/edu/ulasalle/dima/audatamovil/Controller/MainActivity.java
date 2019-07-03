@@ -101,9 +101,15 @@ public class MainActivity extends AppCompatActivity {
                 if(edtHtml.getText().toString() == null || edtHtml.getText().toString().trim().length() == 0) {
                     Toast.makeText(MainActivity.this, "Se necesita una URL", Toast.LENGTH_SHORT).show();
                 } else {
+                    String url=edtHtml.getText().toString();
+                    String ip = getIntent().getStringExtra("ip");
                     Intent i = new Intent(getApplicationContext(), HtmlActivity.class);
+                    i.putExtra("url",url);
+                    i.putExtra("ip",ip);
+                    System.out.println("urlMainAct"+url);
                     startActivity(i);
                 }
+
             }
         });
 
