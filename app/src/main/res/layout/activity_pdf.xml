@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+
         <EditText
             android:layout_width="260dp"
             android:layout_height="50dp"
@@ -84,14 +85,37 @@
             android:layout_marginTop="25dp"
             android:singleLine="true"
             android:layout_marginLeft="20dp"/>
+
+        <RadioGroup
+            android:id="@+id/pdfRadioGroup"
+            android:layout_width="wrap_content"
+            android:layout_below="@+id/edtPdfBookmark"
+            android:layout_height="30dp"
+            android:orientation="horizontal"
+            android:layout_marginTop="50dp"
+            android:layout_centerHorizontal="true">
+
+            <RadioButton
+                android:id="@+id/pdfRadioMP3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="MP3"/>
+
+            <RadioButton
+                android:id="@+id/pdfRadioAAC"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="AAC"/>
+        </RadioGroup>
+
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/btnEnviarPdf"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="30dp"
             android:text="Enviar"
-            android:layout_below="@+id/edtPdfBookmark"/>
+            android:layout_below="@+id/pdfRadioGroup"/>
     </RelativeLayout>
 
 </ScrollView>

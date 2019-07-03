@@ -73,7 +73,12 @@ public class TtsActivity extends AppCompatActivity {
                 if(formato == null | formato.length() == 0){
                     Toast.makeText(TtsActivity.this, "Selecciona un formato", Toast.LENGTH_SHORT).show();
                 } else {
-                    sendText(text,formato);
+                    if(formato.equals("MP3")){
+                        sendTextToMP3(text,formato);
+                    }
+                    if(formato.equals("AAC")){
+                        sendTextToAAC(text,formato);
+                    }
                 }
                 Toast.makeText(TtsActivity.this,"Texto enviado"+ getIntent().getStringExtra("text"),Toast.LENGTH_SHORT).show();
                 Toast.makeText(TtsActivity.this,"Radio seleccionado"+ ttsRadioButton.getText(),Toast.LENGTH_SHORT).show();
@@ -82,10 +87,10 @@ public class TtsActivity extends AppCompatActivity {
 
     }
 
-    public void sendText(String text, String formato){
+    public void sendTextToMP3(String text, String formato){
         final String type = formato;
         System.out.println(text);
-        Call<ResponseBody> call = ttsService.sendText(text);
+        Call<ResponseBody> call = ttsService.sendTextToMP3(text);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -93,7 +98,37 @@ public class TtsActivity extends AppCompatActivity {
                     Toast.makeText(TtsActivity.this,"Nombre enviado satisfactoriamente", Toast.LENGTH_SHORT).show();
                     Log.i("Respuesta to String:", response.body().toString());
                     try {
-                        saveFileAudio(response.body().bytes(), type);
+                        saveFileAudioMP3(response.body().bytes());
+                    } catch (IOException e) {
+                        Log.i("Error audio:", e.toString());
+                    }
+
+                } else {
+                    Toast.makeText(TtsActivity.this, "Error conexion con el Servidor", Toast.LENGTH_SHORT).show();
+                    Integer error = response.code();
+                    Toast.makeText(TtsActivity.this, "Error " + error, Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.e("ERROR: ", t.getMessage());
+            }
+        });
+    }
+
+    public void sendTextToAAC(String text, String formato){
+        final String type = formato;
+        System.out.println(text);
+        Call<ResponseBody> call = ttsService.sendTextToAAC(text);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if(response.isSuccessful()){
+                    Toast.makeText(TtsActivity.this,"Nombre enviado satisfactoriamente", Toast.LENGTH_SHORT).show();
+                    Log.i("Respuesta to String:", response.body().toString());
+                    try {
+                        saveFileAudioAAC(response.body().bytes());
                     } catch (IOException e) {
                         Log.i("Error audio:", e.toString());
                     }
@@ -113,40 +148,41 @@ public class TtsActivity extends AppCompatActivity {
     }
 
 
-    private void saveFileAudio(byte[] mp3SoundByteArray, String type) {
+    private void saveFileAudioMP3(byte[] mp3SoundByteArray) {
         UUID uuid = UUID.randomUUID();
 
         String uuidStringRandom = uuid.toString();
 
-        if (type.equals("MP3")) {
-            try {
-                File file = new File(
-                        Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
-                        uuidStringRandom + ".mp3"
-                );
-                FileOutputStream fos = new FileOutputStream(file);
-                fos.write(mp3SoundByteArray);
-                fos.close();
-                Log.d("FileSize: ", String.valueOf(file.getTotalSpace()));
-            } catch (IOException ex) {
-                ex.printStackTrace();
-                Log.d("Error audio: ", String.valueOf(ex));
-            }
-        } else {
-            try {
-                File file = new File(
-                        Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
-                        uuidStringRandom + ".aac"
-                );
-                FileOutputStream fos = new FileOutputStream(file);
-                fos.write(mp3SoundByteArray);
-                fos.close();
-                Log.d("FileSize: ", String.valueOf(file.getTotalSpace()));
-            } catch (IOException ex) {
-                ex.printStackTrace();
-                Log.d("Error audio: ", String.valueOf(ex));
-            }
+        try {
+            File file = new File(
+                    Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
+                    uuidStringRandom + ".mp3"
+            );
+            FileOutputStream fos = new FileOutputStream(file);
+            fos.write(mp3SoundByteArray);
+            fos.close();
+            Log.d("FileSize: ", String.valueOf(file.getTotalSpace()));
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            Log.d("Error audio: ", String.valueOf(ex));
         }
+    }
 
+    private void saveFileAudioAAC(byte[] mp3SoundByteArray) {
+        UUID uuid = UUID.randomUUID();
+        String uuidStringRandom = uuid.toString();
+        try {
+            File file = new File(
+                    Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
+                    uuidStringRandom + ".aac"
+            );
+            FileOutputStream fos = new FileOutputStream(file);
+            fos.write(mp3SoundByteArray);
+            fos.close();
+            Log.d("FileSize: ", String.valueOf(file.getTotalSpace()));
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            Log.d("Error audio: ", String.valueOf(ex));
+        }
     }
 }

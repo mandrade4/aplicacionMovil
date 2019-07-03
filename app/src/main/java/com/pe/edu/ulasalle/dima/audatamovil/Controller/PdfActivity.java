@@ -13,6 +13,8 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import com.pe.edu.ulasalle.dima.audatamovil.R;
 import com.pe.edu.ulasalle.dima.audatamovil.Remote.Links;
@@ -42,6 +44,8 @@ public class PdfActivity extends AppCompatActivity {
     EditText edtPdfStopList;
 
     Button btnEnviarPdf;
+    RadioGroup pdfRadioGroup;
+    RadioButton pdfRadioButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
