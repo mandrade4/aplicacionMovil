@@ -169,7 +169,7 @@ public class PdfActivity extends AppCompatActivity {
                     Toast.makeText(PdfActivity.this,"Pdf enviado satisfactoriamente", Toast.LENGTH_SHORT).show();
                     Log.i("Respuesta to String:", response.body().toString());
                     try {
-                        saveFileAudio(response.body().bytes());
+                        saveFileAudioMP3(response.body().bytes());
                     } catch (IOException e) {
                         Log.i("Error audio:", e.toString());
                     }
@@ -199,7 +199,7 @@ public class PdfActivity extends AppCompatActivity {
                     Toast.makeText(PdfActivity.this,"Pdf enviado satisfactoriamente", Toast.LENGTH_SHORT).show();
                     Log.i("Respuesta to String:", response.body().toString());
                     try {
-                        saveFileAudio(response.body().bytes());
+                        saveFileAudioAAC(response.body().bytes());
                     } catch (IOException e) {
                         Log.i("Error audio:", e.toString());
                     }
@@ -230,7 +230,7 @@ public class PdfActivity extends AppCompatActivity {
                     Toast.makeText(PdfActivity.this,"Pdf enviado satisfactoriamente", Toast.LENGTH_SHORT).show();
                     Log.i("Respuesta to String:", response.body().toString());
                     try {
-                        saveFileAudio(response.body().bytes());
+                        saveFileAudioMP3(response.body().bytes());
                     } catch (IOException e) {
                         Log.i("Error audio:", e.toString());
                     }
@@ -261,7 +261,7 @@ public class PdfActivity extends AppCompatActivity {
                     Toast.makeText(PdfActivity.this,"Pdf enviado satisfactoriamente", Toast.LENGTH_SHORT).show();
                     Log.i("Respuesta to String:", response.body().toString());
                     try {
-                        saveFileAudio(response.body().bytes());
+                        saveFileAudioAAC(response.body().bytes());
                     } catch (IOException e) {
                         Log.i("Error audio:", e.toString());
                     }
@@ -296,7 +296,7 @@ public class PdfActivity extends AppCompatActivity {
                     Toast.makeText(PdfActivity.this,"Pdf enviado satisfactoriamente", Toast.LENGTH_SHORT).show();
                     Log.i("Respuesta to String:", response.body().toString());
                     try {
-                        saveFileAudio(response.body().bytes());
+                        saveFileAudioMP3(response.body().bytes());
                     } catch (IOException e) {
                         Log.i("Error audio:", e.toString());
                     }
@@ -331,7 +331,7 @@ public class PdfActivity extends AppCompatActivity {
                     Toast.makeText(PdfActivity.this,"Pdf enviado satisfactoriamente", Toast.LENGTH_SHORT).show();
                     Log.i("Respuesta to String:", response.body().toString());
                     try {
-                        saveFileAudio(response.body().bytes());
+                        saveFileAudioAAC(response.body().bytes());
                     } catch (IOException e) {
                         Log.i("Error audio:", e.toString());
                     }
@@ -367,7 +367,7 @@ public class PdfActivity extends AppCompatActivity {
                     Toast.makeText(PdfActivity.this,"Pdf enviado satisfactoriamente", Toast.LENGTH_SHORT).show();
                     Log.i("Respuesta to String:", response.body().toString());
                     try {
-                        saveFileAudio(response.body().bytes());
+                        saveFileAudioMP3(response.body().bytes());
                     } catch (IOException e) {
                         Log.i("Error audio:", e.toString());
                     }
@@ -403,7 +403,7 @@ public class PdfActivity extends AppCompatActivity {
                     Toast.makeText(PdfActivity.this,"Pdf enviado satisfactoriamente", Toast.LENGTH_SHORT).show();
                     Log.i("Respuesta to String:", response.body().toString());
                     try {
-                        saveFileAudio(response.body().bytes());
+                        saveFileAudioAAC(response.body().bytes());
                     } catch (IOException e) {
                         Log.i("Error audio:", e.toString());
                     }
@@ -435,7 +435,7 @@ public class PdfActivity extends AppCompatActivity {
                     Toast.makeText(PdfActivity.this,"Pdf enviado satisfactoriamente", Toast.LENGTH_SHORT).show();
                     Log.i("Respuesta to String:", response.body().toString());
                     try {
-                        saveFileAudio(response.body().bytes());
+                        saveFileAudioMP3(response.body().bytes());
                     } catch (IOException e) {
                         Log.i("Error audio:", e.toString());
                     }
@@ -454,7 +454,7 @@ public class PdfActivity extends AppCompatActivity {
 
     }
 
-    //
+    //6
     public void sendPdftoAacWithSl(File pdf, String stopList){
         RequestBody filePdf = RequestBody.create(MediaType.parse("application/pdf"), pdf);
         RequestBody sL = RequestBody.create(MediaType.parse("text/plain"), stopList);
@@ -467,7 +467,7 @@ public class PdfActivity extends AppCompatActivity {
                     Toast.makeText(PdfActivity.this,"Pdf enviado satisfactoriamente", Toast.LENGTH_SHORT).show();
                     Log.i("Respuesta to String:", response.body().toString());
                     try {
-                        saveFileAudio(response.body().bytes());
+                        saveFileAudioAAC(response.body().bytes());
                     } catch (IOException e) {
                         Log.i("Error audio:", e.toString());
                     }
@@ -501,7 +501,7 @@ public class PdfActivity extends AppCompatActivity {
                     Toast.makeText(PdfActivity.this,"Pdf enviado satisfactoriamente", Toast.LENGTH_SHORT).show();
                     Log.i("Respuesta to String:", response.body().toString());
                     try {
-                        saveFileAudio(response.body().bytes());
+                        saveFileAudioMP3(response.body().bytes());
                     } catch (IOException e) {
                         Log.i("Error audio:", e.toString());
                     }
@@ -533,7 +533,7 @@ public class PdfActivity extends AppCompatActivity {
                     Toast.makeText(PdfActivity.this,"Pdf enviado satisfactoriamente", Toast.LENGTH_SHORT).show();
                     Log.i("Respuesta to String:", response.body().toString());
                     try {
-                        saveFileAudio(response.body().bytes());
+                        saveFileAudioAAC(response.body().bytes());
                     } catch (IOException e) {
                         Log.i("Error audio:", e.toString());
                     }
@@ -566,7 +566,7 @@ public class PdfActivity extends AppCompatActivity {
                     Toast.makeText(PdfActivity.this,"Pdf enviado satisfactoriamente", Toast.LENGTH_SHORT).show();
                     Log.i("Respuesta to String:", response.body().toString());
                     try {
-                        saveFileAudio(response.body().bytes());
+                        saveFileAudioMP3(response.body().bytes());
                     } catch (IOException e) {
                         Log.i("Error audio:", e.toString());
                     }
@@ -598,7 +598,7 @@ public class PdfActivity extends AppCompatActivity {
                     Toast.makeText(PdfActivity.this,"Pdf enviado satisfactoriamente", Toast.LENGTH_SHORT).show();
                     Log.i("Respuesta to String:", response.body().toString());
                     try {
-                        saveFileAudio(response.body().bytes());
+                        saveFileAudioMP3(response.body().bytes());
                     } catch (IOException e) {
                         Log.i("Error audio:", e.toString());
                     }
@@ -627,7 +627,7 @@ public class PdfActivity extends AppCompatActivity {
                     Toast.makeText(PdfActivity.this,"Pdf enviado satisfactoriamente", Toast.LENGTH_SHORT).show();
                     Log.i("Respuesta to String:", response.body().toString());
                     try {
-                        saveFileAudio(response.body().bytes());
+                        saveFileAudioMP3(response.body().bytes());
                     } catch (IOException e) {
                         Log.i("Error audio:", e.toString());
                     }
@@ -646,7 +646,7 @@ public class PdfActivity extends AppCompatActivity {
 
     }
 
-    private void saveFileAudio(byte[] mp3SoundByteArray) {
+    private void saveFileAudioMP3(byte[] mp3SoundByteArray) {
         UUID uuid = UUID.randomUUID();
 
         String uuidStringRandom = uuid.toString();
@@ -655,6 +655,26 @@ public class PdfActivity extends AppCompatActivity {
             File file = new File(
                     Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
                     uuidStringRandom + ".mp3"
+            );
+            FileOutputStream fos = new FileOutputStream(file);
+            fos.write(mp3SoundByteArray);
+            fos.close();
+            Log.d("FileSize: ", String.valueOf(file.getTotalSpace()));
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            Log.d("Error audio: ", String.valueOf(ex));
+        }
+    }
+
+    private void saveFileAudioAAC(byte[] mp3SoundByteArray) {
+        UUID uuid = UUID.randomUUID();
+
+        String uuidStringRandom = uuid.toString();
+
+        try {
+            File file = new File(
+                    Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
+                    uuidStringRandom + ".aac"
             );
             FileOutputStream fos = new FileOutputStream(file);
             fos.write(mp3SoundByteArray);
