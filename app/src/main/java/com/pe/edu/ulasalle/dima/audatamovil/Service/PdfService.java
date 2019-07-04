@@ -20,7 +20,7 @@ public interface PdfService {
     Call<ResponseBody> mp3PdfPageInicio(@Part("uploadedFile") RequestBody uploadedFile, @Part("paginaInicio") RequestBody paginaInicio);
 
     @Multipart
-    @POST("funcion001")
+    @POST("funcion22")
     Call<ResponseBody> mp3PdfPageInicioPageFin(@Part("uploadedFile") RequestBody uploadedFile, @Part("paginaInicio") RequestBody paginaInicio, @Part("paginaFin") RequestBody paginaFin);
 
     @Multipart
@@ -36,7 +36,7 @@ public interface PdfService {
     Call<ResponseBody> mp3PdfBooMarsL(@Part("uploadedFile") RequestBody uploadedFile,@Part("bookmark") RequestBody bookmark, @Part("sL") RequestBody sL);
 
     @Multipart
-    @POST("funcion002")
+    @POST("funcion23")
     Call<ResponseBody> mp3PdfBooMar(@Part("uploadedFile") RequestBody uploadedFile,@Part("bookmark") RequestBody bookmark);
 
     @Multipart
@@ -44,7 +44,7 @@ public interface PdfService {
     Call<ResponseBody> mp3PdfPagIPagFsL(@Part("uploadedFile") RequestBody uploadedFile, @Part("paginaInicio") RequestBody paginaInicio, @Part("paginaFin") RequestBody paginaFin, @Part("sL") RequestBody sL);
 
     @Multipart
-    @POST("funcion05")
+    @POST("funcion25")
     Call<ResponseBody> mp3PdfsL(@Part("uploadedFile") RequestBody uploadedFile, @Part("sL") RequestBody sL);
 
     @Multipart
