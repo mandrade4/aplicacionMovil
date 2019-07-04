@@ -28,4 +28,18 @@ public interface HtmlService {
     @POST("funcion011")
     Call<ResponseBody> mp3HtmlPalIniPalFin(@Part("uploadedFile2") RequestBody uploadFile2, @Part("pini") RequestBody pini, @Part("pfin") RequestBody pfin);
 
+    /////aac
+
+    @Multipart
+    @POST("funcionhtml5")
+    Call<ResponseBody> aacHtml(@Part("uploadedFile2") RequestBody uploadFile2);
+
+    @Multipart
+    @POST("funcionhtml6")
+    Call<ResponseBody> aacHtmlTagContents(@Part("uploadedFile2") RequestBody uploadFile2, @Part("tag") RequestBody tag);
+
+    @Multipart
+    @POST("funcionhtml7")
+    Call<ResponseBody> aacHtmlTagSLTCL(@Part("uploadedFile2") RequestBody uploadFile2, @Part("tag") RequestBody tag, @Part("stL") RequestBody stL, @Part("stcL") RequestBody stcL);
+
 }
