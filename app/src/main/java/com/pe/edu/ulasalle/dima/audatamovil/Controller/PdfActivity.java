@@ -147,7 +147,7 @@ public class PdfActivity extends AppCompatActivity {
                             System.out.println("Func14");
                             sendPdftoAacWithBm(uploadedFile, bookmark);
                         } else if(edtPdfStopList.getText().toString().trim().length() != 0 && edtPdfBookmark.getText().toString().trim().length() == 0 && edtPdfpi.getText().toString().trim().length() == 0 && edtPdfpf.getText().toString().trim().length() == 0 && edtPdfPalabraInicio.getText().toString().trim().length() == 0 && edtPdfPalabraFin.getText().toString().trim().length() == 0){
-                            System.out.println("Func8");
+                            System.out.println("Func15");
                             sendPdftoAacWithSl(uploadedFile, stopList);
                         }
                     }
