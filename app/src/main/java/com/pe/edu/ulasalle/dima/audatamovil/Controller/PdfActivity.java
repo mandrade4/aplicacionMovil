@@ -66,6 +66,8 @@ public class PdfActivity extends AppCompatActivity {
 
         getWindow().setAttributes(params);
 
+        pdfRadioGroup = findViewById(R.id.pdfRadioGroup);
+
         String ip = getIntent().getStringExtra("ip");
         pdfService = Links.getPdfService(ip);
 
@@ -81,6 +83,9 @@ public class PdfActivity extends AppCompatActivity {
         btnEnviarPdf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                int radioId = pdfRadioGroup.getCheckedRadioButtonId();
+                pdfRadioButton = findViewById(radioId);
+                String formato = pdfRadioButton.getText().toString();
 
                 String pdf =  getIntent().getStringExtra("pdf");
                 File uploadedFile = new File(pdf);
@@ -92,39 +97,67 @@ public class PdfActivity extends AppCompatActivity {
                 String bookmark = edtPdfBookmark.getText().toString();
                 String stopList = edtPdfStopList.getText().toString();
 
-                if(edtPdfpi.getText().toString().trim().length() !=0 && edtPdfpf.getText().toString().trim().length() == 0 && edtPdfPalabraInicio.getText().toString().trim().length() == 0 && edtPdfPalabraFin.getText().toString().trim().length() == 0 && edtPdfStopList.getText().toString().trim().length() == 0 && edtPdfBookmark.getText().toString().trim().length() == 0 ){
-                    System.out.println("Func1");
-                    sendPdftoMp3withPageStart(uploadedFile,pageInicio);
-                } else if(edtPdfpi.getText().toString().trim().length() != 0 && edtPdfpf.getText().toString().trim().length() != 0 && edtPdfPalabraInicio.getText().toString().trim().length() == 0 && edtPdfPalabraFin.getText().toString().trim().length() == 0 && edtPdfStopList.getText().toString().trim().length() == 0 && edtPdfBookmark.getText().toString().trim().length() == 0 ){
-                    System.out.println("Func2");
-                    sendPdftoMp3withPageStartandPageEnd(uploadedFile, pageInicio, pageFin);
-                } else if(edtPdfpi.getText().toString().trim().length() != 0 && edtPdfpf.getText().toString().trim().length() != 0 && edtPdfPalabraInicio.getText().toString().trim().length() != 0 && edtPdfPalabraFin.getText().toString().trim().length() != 0 && edtPdfStopList.getText().toString().trim().length() == 0 && edtPdfBookmark.getText().toString().trim().length() == 0) {
-                    System.out.println("Func3");
-                    sendPdftoMp3withPagStPagEnWorStWorEnd(uploadedFile,pageInicio, pageFin, palInicio, palFin);
-                } else if(edtPdfpi.getText().toString().trim().length() != 0 && edtPdfpf.getText().toString().trim().length() != 0 && edtPdfPalabraInicio.getText().toString().trim().length()!=0 && edtPdfPalabraFin.getText().toString().trim().length() !=0 && edtPdfStopList.getText().toString().trim().length() !=0 && edtPdfBookmark.getText().toString().trim().length() == 0) {
-                    System.out.println("Func4");
-                    sendPdftoMp3withPagStPagEnWorStWorEndStoList(uploadedFile,pageInicio, pageFin, palInicio, palFin, stopList);
-                } else if(edtPdfBookmark.getText().toString().trim().length() != 0  && edtPdfStopList.getText().toString().trim().length() != 0 && edtPdfpi.getText().toString().trim().length() == 0 && edtPdfpf.getText().toString().trim().length() == 0 && edtPdfPalabraInicio.getText().toString().trim().length() == 0 && edtPdfPalabraFin.getText().toString().trim().length() == 0){
-                    System.out.println("Func5");
-                    sendPdftoMp3WithBmSl(uploadedFile, bookmark, stopList);
-                } else if(edtPdfBookmark.getText().toString().trim().length() != 0 && edtPdfStopList.getText().toString().trim().length() == 0 && edtPdfpi.getText().toString().trim().length() == 0 && edtPdfpf.getText().toString().trim().length() == 0 && edtPdfPalabraInicio.getText().toString().trim().length() == 0 && edtPdfPalabraFin.getText().toString().trim().length() == 0){
-                    System.out.println("Func6");
-                    sendPdftoMp3WithBm(uploadedFile, bookmark);
-                } else if(edtPdfpi.getText().toString().trim().length() != 0 && edtPdfpf.getText().toString().trim().length() != 0 && edtPdfStopList.getText().toString().trim().length() != 0 && edtPdfPalabraInicio.getText().toString().trim().length() == 0 && edtPdfPalabraFin.getText().toString().trim().length()== 0 && edtPdfBookmark.getText().toString().trim().length() == 0) {
-                    System.out.println("Func7");
-                    sendPdftoMp3withPagStPagEnStoList(uploadedFile,pageInicio, pageFin, stopList);
-                } else if(edtPdfStopList.getText().toString().trim().length() != 0 && edtPdfBookmark.getText().toString().trim().length() == 0 && edtPdfpi.getText().toString().trim().length() == 0 && edtPdfpf.getText().toString().trim().length() == 0 && edtPdfPalabraInicio.getText().toString().trim().length() == 0 && edtPdfPalabraFin.getText().toString().trim().length() == 0){
-                    System.out.println("Func8");
-                    sendPdftoMp3WithSl(uploadedFile, stopList);
-                } else if(edtPdfBookmark.getText().toString().trim().length() == 0 &&  edtPdfStopList.getText().toString().trim().length() == 0 && edtPdfpi.getText().toString().trim().length() == 0 && edtPdfpf.getText().toString().trim().length() == 0 && edtPdfPalabraInicio.getText().toString().trim().length() == 0 && edtPdfPalabraFin.getText().toString().trim().length() == 0){
-                    System.out.println("Func9");
-                    sendPdftoMp3(uploadedFile);
+                if(formato == null | formato.length() == 0){
+                    Toast.makeText(PdfActivity.this, "Selecciona un formato", Toast.LENGTH_SHORT).show();
+                } else {
+                    if(formato.equals("MP3")){
+                        if(edtPdfpi.getText().toString().trim().length() !=0 && edtPdfpf.getText().toString().trim().length() == 0 && edtPdfPalabraInicio.getText().toString().trim().length() == 0 && edtPdfPalabraFin.getText().toString().trim().length() == 0 && edtPdfStopList.getText().toString().trim().length() == 0 && edtPdfBookmark.getText().toString().trim().length() == 0 ){
+                            System.out.println("Func1");
+                            sendPdftoMp3withPageStart(uploadedFile,pageInicio);
+                        } else if(edtPdfpi.getText().toString().trim().length() != 0 && edtPdfpf.getText().toString().trim().length() != 0 && edtPdfPalabraInicio.getText().toString().trim().length() == 0 && edtPdfPalabraFin.getText().toString().trim().length() == 0 && edtPdfStopList.getText().toString().trim().length() == 0 && edtPdfBookmark.getText().toString().trim().length() == 0 ){
+                            System.out.println("Func2");
+                            sendPdftoMp3withPageStartandPageEnd(uploadedFile, pageInicio, pageFin);
+                        } else if(edtPdfpi.getText().toString().trim().length() != 0 && edtPdfpf.getText().toString().trim().length() != 0 && edtPdfPalabraInicio.getText().toString().trim().length() != 0 && edtPdfPalabraFin.getText().toString().trim().length() != 0 && edtPdfStopList.getText().toString().trim().length() == 0 && edtPdfBookmark.getText().toString().trim().length() == 0) {
+                            System.out.println("Func3");
+                            sendPdftoMp3withPagStPagEnWorStWorEnd(uploadedFile,pageInicio, pageFin, palInicio, palFin);
+                        } else if(edtPdfpi.getText().toString().trim().length() != 0 && edtPdfpf.getText().toString().trim().length() != 0 && edtPdfPalabraInicio.getText().toString().trim().length()!=0 && edtPdfPalabraFin.getText().toString().trim().length() !=0 && edtPdfStopList.getText().toString().trim().length() !=0 && edtPdfBookmark.getText().toString().trim().length() == 0) {
+                            System.out.println("Func4");
+                            sendPdftoMp3withPagStPagEnWorStWorEndStoList(uploadedFile,pageInicio, pageFin, palInicio, palFin, stopList);
+                        } else if(edtPdfBookmark.getText().toString().trim().length() != 0  && edtPdfStopList.getText().toString().trim().length() != 0 && edtPdfpi.getText().toString().trim().length() == 0 && edtPdfpf.getText().toString().trim().length() == 0 && edtPdfPalabraInicio.getText().toString().trim().length() == 0 && edtPdfPalabraFin.getText().toString().trim().length() == 0){
+                            System.out.println("Func5");
+                            sendPdftoMp3WithBmSl(uploadedFile, bookmark, stopList);
+                        } else if(edtPdfBookmark.getText().toString().trim().length() != 0 && edtPdfStopList.getText().toString().trim().length() == 0 && edtPdfpi.getText().toString().trim().length() == 0 && edtPdfpf.getText().toString().trim().length() == 0 && edtPdfPalabraInicio.getText().toString().trim().length() == 0 && edtPdfPalabraFin.getText().toString().trim().length() == 0){
+                            System.out.println("Func6");
+                            sendPdftoMp3WithBm(uploadedFile, bookmark);
+                        } else if(edtPdfpi.getText().toString().trim().length() != 0 && edtPdfpf.getText().toString().trim().length() != 0 && edtPdfStopList.getText().toString().trim().length() != 0 && edtPdfPalabraInicio.getText().toString().trim().length() == 0 && edtPdfPalabraFin.getText().toString().trim().length()== 0 && edtPdfBookmark.getText().toString().trim().length() == 0) {
+                            System.out.println("Func7");
+                            sendPdftoMp3withPagStPagEnStoList(uploadedFile,pageInicio, pageFin, stopList);
+                        } else if(edtPdfStopList.getText().toString().trim().length() != 0 && edtPdfBookmark.getText().toString().trim().length() == 0 && edtPdfpi.getText().toString().trim().length() == 0 && edtPdfpf.getText().toString().trim().length() == 0 && edtPdfPalabraInicio.getText().toString().trim().length() == 0 && edtPdfPalabraFin.getText().toString().trim().length() == 0){
+                            System.out.println("Func8");
+                            sendPdftoMp3WithSl(uploadedFile, stopList);
+                        } else if(edtPdfBookmark.getText().toString().trim().length() == 0 &&  edtPdfStopList.getText().toString().trim().length() == 0 && edtPdfpi.getText().toString().trim().length() == 0 && edtPdfpf.getText().toString().trim().length() == 0 && edtPdfPalabraInicio.getText().toString().trim().length() == 0 && edtPdfPalabraFin.getText().toString().trim().length() == 0){
+                            System.out.println("Func9");
+                            sendPdftoMp3(uploadedFile);
+                        }
+                    }
+                    if(formato.equals("AAC")){
+                        if(edtPdfpi.getText().toString().trim().length() !=0 && edtPdfpf.getText().toString().trim().length() == 0 && edtPdfPalabraInicio.getText().toString().trim().length() == 0 && edtPdfPalabraFin.getText().toString().trim().length() == 0 && edtPdfStopList.getText().toString().trim().length() == 0 && edtPdfBookmark.getText().toString().trim().length() == 0 ){
+                            System.out.println("Func10");
+                            sendPdftoAacwithPageStart(uploadedFile,pageInicio);
+                        } else if(edtPdfpi.getText().toString().trim().length() != 0 && edtPdfpf.getText().toString().trim().length() != 0 && edtPdfPalabraInicio.getText().toString().trim().length() == 0 && edtPdfPalabraFin.getText().toString().trim().length() == 0 && edtPdfStopList.getText().toString().trim().length() == 0 && edtPdfBookmark.getText().toString().trim().length() == 0 ){
+                            System.out.println("Func11");
+                            sendPdftoAacwithPageStartandPageEnd(uploadedFile, pageInicio, pageFin);
+                        } else if(edtPdfpi.getText().toString().trim().length() != 0 && edtPdfpf.getText().toString().trim().length() != 0 && edtPdfPalabraInicio.getText().toString().trim().length() != 0 && edtPdfPalabraFin.getText().toString().trim().length() != 0 && edtPdfStopList.getText().toString().trim().length() == 0 && edtPdfBookmark.getText().toString().trim().length() == 0) {
+                            System.out.println("Func12");
+                            sendPdftoAacwithPagStPagEnWorStWorEnd(uploadedFile,pageInicio, pageFin, palInicio, palFin);
+                        } else if(edtPdfpi.getText().toString().trim().length() != 0 && edtPdfpf.getText().toString().trim().length() != 0 && edtPdfPalabraInicio.getText().toString().trim().length()!=0 && edtPdfPalabraFin.getText().toString().trim().length() !=0 && edtPdfStopList.getText().toString().trim().length() !=0 && edtPdfBookmark.getText().toString().trim().length() == 0) {
+                            System.out.println("Func13");
+                            sendPdftoAacwithPagStPagEnWorStWorEndStoList(uploadedFile,pageInicio, pageFin, palInicio, palFin, stopList);
+                        } else if(edtPdfBookmark.getText().toString().trim().length() != 0 && edtPdfStopList.getText().toString().trim().length() == 0 && edtPdfpi.getText().toString().trim().length() == 0 && edtPdfpf.getText().toString().trim().length() == 0 && edtPdfPalabraInicio.getText().toString().trim().length() == 0 && edtPdfPalabraFin.getText().toString().trim().length() == 0){
+                            System.out.println("Func14");
+                            sendPdftoAacWithBm(uploadedFile, bookmark);
+                        } else if(edtPdfStopList.getText().toString().trim().length() != 0 && edtPdfBookmark.getText().toString().trim().length() == 0 && edtPdfpi.getText().toString().trim().length() == 0 && edtPdfpf.getText().toString().trim().length() == 0 && edtPdfPalabraInicio.getText().toString().trim().length() == 0 && edtPdfPalabraFin.getText().toString().trim().length() == 0){
+                            System.out.println("Func8");
+                            sendPdftoAacWithSl(uploadedFile, stopList);
+                        }
+                    }
                 }
+
             }
         });
 
     }
-
+    //1
     public void sendPdftoMp3withPageStart(File pdf, String paginaInicio){
         RequestBody filePdf = RequestBody.create(MediaType.parse("application/pdf"), pdf);
         RequestBody pageIni = RequestBody.create(MediaType.parse("text/plain"), paginaInicio);
@@ -154,7 +187,37 @@ public class PdfActivity extends AppCompatActivity {
             }
         });
     }
+    //1
+    public void sendPdftoAacwithPageStart(File pdf, String paginaInicio){
+        RequestBody filePdf = RequestBody.create(MediaType.parse("application/pdf"), pdf);
+        RequestBody pageIni = RequestBody.create(MediaType.parse("text/plain"), paginaInicio);
+        Call<ResponseBody> call = pdfService.aacPdfPageInicio(filePdf, pageIni);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if(response.isSuccessful()){
+                    Toast.makeText(PdfActivity.this,"Pdf enviado satisfactoriamente", Toast.LENGTH_SHORT).show();
+                    Log.i("Respuesta to String:", response.body().toString());
+                    try {
+                        saveFileAudio(response.body().bytes());
+                    } catch (IOException e) {
+                        Log.i("Error audio:", e.toString());
+                    }
 
+                } else {
+                    Toast.makeText(PdfActivity.this, "Error conexion con el Servidor 1", Toast.LENGTH_SHORT).show();
+                    Integer error = response.code();
+                    Toast.makeText(PdfActivity.this, "Error " + error, Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.e("ERROR: ", t.getMessage());
+            }
+        });
+    }
+    //2
     public void sendPdftoMp3withPageStartandPageEnd(File pdf, String paginaInicio, String paginaFin){
         RequestBody filePdf = RequestBody.create(MediaType.parse("application/pdf"), pdf);
         RequestBody pageIni = RequestBody.create(MediaType.parse("text/plain"), paginaInicio);
@@ -185,7 +248,39 @@ public class PdfActivity extends AppCompatActivity {
             }
         });
     }
+    //2
+    public void sendPdftoAacwithPageStartandPageEnd(File pdf, String paginaInicio, String paginaFin){
+        RequestBody filePdf = RequestBody.create(MediaType.parse("application/pdf"), pdf);
+        RequestBody pageIni = RequestBody.create(MediaType.parse("text/plain"), paginaInicio);
+        RequestBody pageFin = RequestBody.create(MediaType.parse("text/plain"), paginaFin);
+        Call<ResponseBody> call = pdfService.aacPdfPageInicioPageFin(filePdf, pageIni, pageFin);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if(response.isSuccessful()){
+                    Toast.makeText(PdfActivity.this,"Pdf enviado satisfactoriamente", Toast.LENGTH_SHORT).show();
+                    Log.i("Respuesta to String:", response.body().toString());
+                    try {
+                        saveFileAudio(response.body().bytes());
+                    } catch (IOException e) {
+                        Log.i("Error audio:", e.toString());
+                    }
 
+                } else {
+                    Toast.makeText(PdfActivity.this, "Error conexion con el Servidor 2", Toast.LENGTH_SHORT).show();
+                    Integer error = response.code();
+                    Toast.makeText(PdfActivity.this, "Error " + error, Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.e("ERROR: ", t.getMessage());
+            }
+        });
+    }
+
+    //3
     public void sendPdftoMp3withPagStPagEnWorStWorEnd(File pdf, String paginaInicio, String paginaFin, String palabraInicio, String palabraFin){
         RequestBody filePdf = RequestBody.create(MediaType.parse("application/pdf"), pdf);
         RequestBody pageIni = RequestBody.create(MediaType.parse("text/plain"), paginaInicio);
@@ -220,6 +315,42 @@ public class PdfActivity extends AppCompatActivity {
 
     }
 
+    //3
+    public void sendPdftoAacwithPagStPagEnWorStWorEnd(File pdf, String paginaInicio, String paginaFin, String palabraInicio, String palabraFin){
+        RequestBody filePdf = RequestBody.create(MediaType.parse("application/pdf"), pdf);
+        RequestBody pageIni = RequestBody.create(MediaType.parse("text/plain"), paginaInicio);
+        RequestBody pageFin = RequestBody.create(MediaType.parse("text/plain"), paginaFin);
+        RequestBody palIni = RequestBody.create(MediaType.parse("text/plain"), palabraInicio);
+        RequestBody palFin = RequestBody.create(MediaType.parse("text/plain"), palabraFin);
+
+        Call<ResponseBody> call = pdfService.aacPdfPagIPagFPalIPalF(filePdf, pageIni, pageFin, palIni, palFin);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if(response.isSuccessful()){
+                    Toast.makeText(PdfActivity.this,"Pdf enviado satisfactoriamente", Toast.LENGTH_SHORT).show();
+                    Log.i("Respuesta to String:", response.body().toString());
+                    try {
+                        saveFileAudio(response.body().bytes());
+                    } catch (IOException e) {
+                        Log.i("Error audio:", e.toString());
+                    }
+                } else {
+                    Toast.makeText(PdfActivity.this, "Error conexion con el Servidor 2", Toast.LENGTH_SHORT).show();
+                    Integer error = response.code();
+                    Toast.makeText(PdfActivity.this, "Error " + error, Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.e("ERROR: ", t.getMessage());
+            }
+        });
+
+    }
+
+    //4
     public void sendPdftoMp3withPagStPagEnWorStWorEndStoList(File pdf, String paginaInicio, String paginaFin, String palabraInicio, String palabraFin, String stopList){
         RequestBody filePdf = RequestBody.create(MediaType.parse("application/pdf"), pdf);
         RequestBody pageIni = RequestBody.create(MediaType.parse("text/plain"), paginaInicio);
@@ -255,6 +386,43 @@ public class PdfActivity extends AppCompatActivity {
 
     }
 
+    //4
+    public void sendPdftoAacwithPagStPagEnWorStWorEndStoList(File pdf, String paginaInicio, String paginaFin, String palabraInicio, String palabraFin, String stopList){
+        RequestBody filePdf = RequestBody.create(MediaType.parse("application/pdf"), pdf);
+        RequestBody pageIni = RequestBody.create(MediaType.parse("text/plain"), paginaInicio);
+        RequestBody pageFin = RequestBody.create(MediaType.parse("text/plain"), paginaFin);
+        RequestBody palIni = RequestBody.create(MediaType.parse("text/plain"), palabraInicio);
+        RequestBody palFin = RequestBody.create(MediaType.parse("text/plain"), palabraFin);
+        RequestBody sL = RequestBody.create(MediaType.parse("text/plain"), stopList);
+
+        Call<ResponseBody> call = pdfService.aacPdfPagIPagFPalIPalFsL(filePdf, pageIni, pageFin, palIni, palFin, sL);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if(response.isSuccessful()){
+                    Toast.makeText(PdfActivity.this,"Pdf enviado satisfactoriamente", Toast.LENGTH_SHORT).show();
+                    Log.i("Respuesta to String:", response.body().toString());
+                    try {
+                        saveFileAudio(response.body().bytes());
+                    } catch (IOException e) {
+                        Log.i("Error audio:", e.toString());
+                    }
+                } else {
+                    Toast.makeText(PdfActivity.this, "Error conexion con el Servidor 2", Toast.LENGTH_SHORT).show();
+                    Integer error = response.code();
+                    Toast.makeText(PdfActivity.this, "Error " + error, Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.e("ERROR: ", t.getMessage());
+            }
+        });
+
+    }
+
+    //6
     public void sendPdftoMp3WithSl(File pdf, String stopList){
         RequestBody filePdf = RequestBody.create(MediaType.parse("application/pdf"), pdf);
         RequestBody sL = RequestBody.create(MediaType.parse("text/plain"), stopList);
@@ -286,11 +454,78 @@ public class PdfActivity extends AppCompatActivity {
 
     }
 
+    //
+    public void sendPdftoAacWithSl(File pdf, String stopList){
+        RequestBody filePdf = RequestBody.create(MediaType.parse("application/pdf"), pdf);
+        RequestBody sL = RequestBody.create(MediaType.parse("text/plain"), stopList);
+
+        Call<ResponseBody> call = pdfService.aacPdfsL(filePdf,sL);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if(response.isSuccessful()){
+                    Toast.makeText(PdfActivity.this,"Pdf enviado satisfactoriamente", Toast.LENGTH_SHORT).show();
+                    Log.i("Respuesta to String:", response.body().toString());
+                    try {
+                        saveFileAudio(response.body().bytes());
+                    } catch (IOException e) {
+                        Log.i("Error audio:", e.toString());
+                    }
+                } else {
+                    Toast.makeText(PdfActivity.this, "Error conexion con el Servidor 2", Toast.LENGTH_SHORT).show();
+                    Integer error = response.code();
+                    Toast.makeText(PdfActivity.this, "Error " + error, Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.e("ERROR: ", t.getMessage());
+            }
+        });
+
+    }
+
+
+
+    //5
     public void sendPdftoMp3WithBm(File pdf, String bookmark){
         RequestBody filePdf = RequestBody.create(MediaType.parse("application/pdf"), pdf);
         RequestBody bm = RequestBody.create(MediaType.parse("text/plain"), bookmark);
 
         Call<ResponseBody> call = pdfService.mp3PdfBooMar(filePdf,bm);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if(response.isSuccessful()){
+                    Toast.makeText(PdfActivity.this,"Pdf enviado satisfactoriamente", Toast.LENGTH_SHORT).show();
+                    Log.i("Respuesta to String:", response.body().toString());
+                    try {
+                        saveFileAudio(response.body().bytes());
+                    } catch (IOException e) {
+                        Log.i("Error audio:", e.toString());
+                    }
+                } else {
+                    Toast.makeText(PdfActivity.this, "Error conexion con el Servidor 2", Toast.LENGTH_SHORT).show();
+                    Integer error = response.code();
+                    Toast.makeText(PdfActivity.this, "Error " + error, Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.e("ERROR: ", t.getMessage());
+            }
+        });
+
+    }
+
+    //5
+    public void sendPdftoAacWithBm(File pdf, String bookmark){
+        RequestBody filePdf = RequestBody.create(MediaType.parse("application/pdf"), pdf);
+        RequestBody bm = RequestBody.create(MediaType.parse("text/plain"), bookmark);
+
+        Call<ResponseBody> call = pdfService.aacPdfBooMar(filePdf,bm);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

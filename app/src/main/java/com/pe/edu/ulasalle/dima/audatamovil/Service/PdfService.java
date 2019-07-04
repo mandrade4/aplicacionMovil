@@ -50,4 +50,29 @@ public interface PdfService {
     @Multipart
     @POST("funcion21")
     Call<ResponseBody> mp3Pdf(@Part("uploadedFile") RequestBody uploadedFile);
+
+    //AAC
+    @Multipart
+    @POST("funcion004")
+    Call<ResponseBody> aacPdfPageInicio(@Part("uploadedFile") RequestBody uploadedFile, @Part("paginaInicio") RequestBody paginaInicio);
+
+    @Multipart
+    @POST("funcion005")
+    Call<ResponseBody> aacPdfPageInicioPageFin(@Part("uploadedFile") RequestBody uploadedFile, @Part("paginaInicio") RequestBody paginaInicio, @Part("paginaFin") RequestBody paginaFin);
+
+    @Multipart
+    @POST("funcion003")
+    Call<ResponseBody> aacPdfPagIPagFPalIPalF(@Part("uploadedFile") RequestBody uploadedFile, @Part("paginaInicio") RequestBody paginaInicio, @Part("paginaFin") RequestBody paginaFin, @Part("pini") RequestBody pini, @Part("pfin") RequestBody pfin);
+
+    @Multipart
+    @POST("funcion007")
+    Call<ResponseBody> aacPdfPagIPagFPalIPalFsL(@Part("uploadedFile") RequestBody uploadedFile, @Part("paginaInicio") RequestBody paginaInicio, @Part("paginaFin") RequestBody paginaFin, @Part("pini") RequestBody pini, @Part("pfin") RequestBody pfin, @Part("sL") RequestBody sL);
+
+    @Multipart
+    @POST("funcion006")
+    Call<ResponseBody> aacPdfBooMar(@Part("uploadedFile") RequestBody uploadedFile,@Part("bookmark") RequestBody bookmark);
+
+    @Multipart
+    @POST("funcion008")
+    Call<ResponseBody> aacPdfsL(@Part("uploadedFile") RequestBody uploadedFile, @Part("sL") RequestBody sL);
 }
