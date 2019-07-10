@@ -23,25 +23,20 @@
                 android:id="@+id/ttsRadioMP3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="MP3"/>
+                android:text="MP3"
+                android:textColor="#FF6F91"
+                android:buttonTint="#FF6F91"/>
 
             <RadioButton
                 android:id="@+id/ttsRadioAAC"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:buttonTint="#0089BA"
+                android:textColor="#0089BA"
                 android:text="AAC"/>
         </RadioGroup>
 
-        <EditText
-            android:layout_width="260dp"
-            android:layout_height="50dp"
-            android:layout_below="@+id/ttsRadioGroup"
-            android:id="@+id/edtHtml"
-            android:background="@drawable/custome_edit_text_bg"
-            android:hint="Escribe un título"
-            android:layout_marginTop="50dp"
-            android:singleLine="true"
-            android:layout_marginLeft="20dp"/>
+
 
         <Button
             android:id="@+id/btnEnviarTts"
@@ -50,7 +45,7 @@
             android:text="ENVIAR"
             android:layout_marginTop="50dp"
             android:layout_centerHorizontal="true"
-            android:layout_below="@+id/edtHtml"/>
+            android:layout_below="@+id/ttsRadioGroup"/>
     </RelativeLayout>
 
 

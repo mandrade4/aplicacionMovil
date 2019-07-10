@@ -13,76 +13,90 @@
 
 
         <EditText
-            android:layout_width="260dp"
+            android:layout_width="180dp"
             android:layout_height="50dp"
             android:id="@+id/edtPdfpi"
             android:background="@drawable/custome_edit_text_bg"
-            android:hint="Página de Inicio"
+            android:hint="  Página de Inicio"
+            android:textColorHint="#000000"
             android:layout_marginTop="50dp"
+            android:layout_centerHorizontal="true"
             android:singleLine="true"
             android:layout_marginLeft="20dp"/>
 
         <EditText
-            android:layout_width="260dp"
+            android:layout_width="180dp"
             android:layout_height="50dp"
             android:layout_below="@+id/edtPdfpi"
             android:id="@+id/edtPdfpf"
+            android:textColorHint="#000000"
             android:background="@drawable/custome_edit_text_bg"
-            android:hint="Página Final"
+            android:hint="   Final"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="25dp"
             android:singleLine="true"
             android:layout_marginLeft="20dp"/>
 
         <EditText
-            android:layout_width="260dp"
+            android:layout_width="180dp"
             android:layout_height="50dp"
             android:layout_below="@+id/edtPdfpf"
             android:id="@+id/edtPdfp"
+            android:textColorHint="#000000"
             android:background="@drawable/custome_edit_text_bg"
-            android:hint="Página"
+            android:hint="  Página"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="25dp"
             android:singleLine="true"
             android:layout_marginLeft="20dp"/>
         <EditText
-            android:layout_width="260dp"
+            android:layout_width="180dp"
             android:layout_height="50dp"
             android:layout_below="@+id/edtPdfp"
             android:id="@+id/edtPdfPalabraInicio"
+            android:layout_centerHorizontal="true"
             android:background="@drawable/custome_edit_text_bg"
-            android:hint="Palabra Inicio"
+            android:hint="  Palabra Inicio"
             android:layout_marginTop="25dp"
+            android:textColorHint="#000000"
             android:singleLine="true"
             android:layout_marginLeft="20dp"/>
         <EditText
-            android:layout_width="260dp"
+            android:layout_width="180dp"
             android:layout_height="50dp"
             android:layout_below="@+id/edtPdfPalabraInicio"
             android:id="@+id/edtPdfPalabraFin"
             android:background="@drawable/custome_edit_text_bg"
-            android:hint="Palabra Fin"
+            android:hint="  Palabra Fin"
             android:layout_marginTop="25dp"
+            android:layout_centerHorizontal="true"
             android:singleLine="true"
+            android:textColorHint="#000000"
             android:layout_marginLeft="20dp"/>
 
         <EditText
-            android:layout_width="260dp"
+            android:layout_width="180dp"
             android:layout_height="50dp"
             android:layout_below="@+id/edtPdfPalabraFin"
             android:id="@+id/edtPdfStopList"
+            android:textColorHint="#000000"
+            android:layout_centerHorizontal="true"
             android:background="@drawable/custome_edit_text_bg"
-            android:hint="Escribe un StopList"
+            android:hint="  StopList"
             android:layout_marginTop="25dp"
             android:singleLine="true"
             android:layout_marginLeft="20dp"/>
 
         <EditText
-            android:layout_width="260dp"
+            android:layout_width="180dp"
             android:layout_height="50dp"
             android:layout_below="@+id/edtPdfStopList"
             android:id="@+id/edtPdfBookmark"
+            android:layout_centerHorizontal="true"
             android:background="@drawable/custome_edit_text_bg"
-            android:hint="Bookmark"
+            android:hint="  Bookmark"
             android:layout_marginTop="25dp"
+            android:textColorHint="#000000"
             android:singleLine="true"
             android:layout_marginLeft="20dp"/>
 
@@ -99,13 +113,19 @@
                 android:id="@+id/pdfRadioMP3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="MP3"/>
+                android:text="MP3"
+                android:textColor="#FF6F91"
+                android:buttonTint="#FF6F91"
+                />
 
             <RadioButton
                 android:id="@+id/pdfRadioAAC"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="AAC"/>
+                android:text="AAC"
+                android:buttonTint="#0089BA"
+                android:textColor="#0089BA"
+                />
         </RadioGroup>
 
         <Button
@@ -114,7 +134,7 @@
             android:id="@+id/btnEnviarPdf"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="30dp"
-            android:text="Enviar"
+            android:text="ENVIAR"
             android:layout_below="@+id/pdfRadioGroup"/>
     </RelativeLayout>
 

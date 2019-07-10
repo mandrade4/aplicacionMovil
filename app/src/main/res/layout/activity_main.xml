@@ -4,91 +4,88 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#2F4F4F"
+    android:background="#FFFFFF"
     tools:context=".Controller.MainActivity">
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/btnOpenIp"
-        android:background="#F11111"
-        android:text="IP"/>
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="10dp"
+        android:drawableLeft="@drawable/ic_ip" />
 
-    <TextView
-        android:text="Bienvenido a Audata"
-        android:layout_width="300dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="50dp"
-        android:layout_centerHorizontal="true"
-        android:textColor="#fff"
-        android:textSize="30sp" />
+
 
     <EditText
-        android:layout_width="260dp"
-        android:layout_height="50dp"
+        android:layout_width="220dp"
+        android:layout_height="60dp"
         android:id="@+id/edtTts"
         android:background="@drawable/custome_edit_text_bg"
         android:drawableLeft="@drawable/ic_tts"
         android:hint="Escribe un texto"
         android:layout_marginTop="150dp"
+        android:textColorHint="#000000"
         android:singleLine="true"
         android:layout_marginLeft="40dp"
         />
 
     <Button
         android:id="@+id/btnTts"
-        android:layout_width="150dp"
-        android:layout_height="50dp"
+        android:layout_width="50dp"
+        android:layout_height="60dp"
         android:layout_marginLeft="0dp"
         android:layout_marginTop="150dp"
         android:layout_toRightOf="@+id/edtTts"
-        android:background="#008080"
-        android:text="@string/btnTts"
-        android:layout_marginRight="40dp"/>
+        android:layout_marginRight="40dp"
+        android:drawableBottom="@drawable/ic_send"/>
 
     <EditText
-        android:layout_width="260dp"
-        android:layout_height="50dp"
+        android:layout_width="220dp"
+        android:layout_height="60dp"
         android:layout_below="@+id/edtTts"
         android:id="@+id/edtHtml"
         android:background="@drawable/custome_edit_text_bg"
         android:drawableLeft="@drawable/ic_html"
         android:hint="Escribe una URL"
+        android:textColorHint="#000000"
         android:layout_marginTop="100dp"
         android:singleLine="true"
         android:layout_marginLeft="40dp"/>
 
     <Button
-        android:layout_width="150dp"
-        android:layout_height="50dp"
-        android:layout_toRightOf="@+id/edtHtml"
-        android:text="@string/btnHtml"
-        android:layout_marginTop="300dp"
-        android:background="#008080"
         android:id="@+id/btnHtml"
-        android:layout_marginRight="40dp"/>
+        android:layout_width="50dp"
+        android:layout_height="60dp"
+        android:layout_marginLeft="1dp"
+        android:layout_marginTop="310dp"
+        android:layout_marginRight="40dp"
+        android:layout_toRightOf="@+id/edtHtml"
+
+        android:drawableBottom="@drawable/ic_send"/>
 
     <TextView
-        android:layout_width="260dp"
-        android:layout_height="50dp"
-        android:hint="Selecciona un PDF"
+        android:layout_width="220dp"
+        android:layout_height="60dp"
+        android:hint="Presiona el botón."
         android:singleLine="true"
         android:textColor="@color/colorTexto"
         android:layout_below="@+id/edtHtml"
         android:layout_marginTop="100dp"
+        android:textColorHint="#000000"
         android:id="@+id/textPdf"
         android:background="@drawable/custome_edit_text_bg"
         android:drawableLeft="@drawable/ic_pdf"
         android:layout_marginLeft="40dp"/>
 
     <Button
-        android:layout_width="150dp"
-        android:layout_height="50dp"
-        android:text="@string/btnPdf"
-        android:layout_toRightOf="@+id/textPdf"
-        android:layout_marginTop="450dp"
-        android:background="#008080"
         android:id="@+id/btnPdf"
-        android:layout_marginRight="40dp"/>
+        android:layout_width="50dp"
+        android:layout_height="60dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="470dp"
+        android:layout_marginRight="40dp"
+        android:layout_toRightOf="@+id/textPdf"
+        android:drawableBottom="@drawable/ic_send" />
 
 </RelativeLayout>

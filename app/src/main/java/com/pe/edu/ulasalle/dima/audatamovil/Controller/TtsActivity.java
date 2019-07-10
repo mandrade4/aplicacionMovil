@@ -46,7 +46,7 @@ public class TtsActivity extends AppCompatActivity {
         int width = ds.widthPixels;
         int height = ds.heightPixels;
 
-        getWindow().setLayout((int)(width*.6),(int)(height*.6));
+        getWindow().setLayout((int)(width*.6),(int)(height*.4));
 
         WindowManager.LayoutParams params = getWindow().getAttributes();
         params.gravity = Gravity.CENTER;
