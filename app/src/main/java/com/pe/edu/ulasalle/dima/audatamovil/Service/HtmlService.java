@@ -47,6 +47,6 @@ public interface HtmlService {
     Call<ResponseBody> aacHtmlPalIniPalFin(@Part("uploadedFile2") RequestBody uploadFile2, @Part("pini") RequestBody pini, @Part("pfin") RequestBody pfin);
 
     @Multipart
-    @POST("funcionhtm8")
+    @POST("funcionhtml8")
     Call<ResponseBody> aacHtmlDivisor(@Part("uploadedFile2") RequestBody uploadFile2, @Part("divisor") RequestBody divisor);
 }
