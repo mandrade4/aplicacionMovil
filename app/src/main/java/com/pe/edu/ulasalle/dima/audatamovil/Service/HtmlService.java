@@ -42,4 +42,8 @@ public interface HtmlService {
     @POST("funcionhtml7")
     Call<ResponseBody> aacHtmlTagSLTCL(@Part("uploadedFile2") RequestBody uploadFile2, @Part("tag") RequestBody tag, @Part("stL") RequestBody stL, @Part("stcL") RequestBody stcL);
 
+    @Multipart
+    @POST("funcion012")
+    Call<ResponseBody> aacHtmlPalIniPalFin(@Part("uploadedFile2") RequestBody uploadFile2, @Part("pini") RequestBody pini, @Part("pfin") RequestBody pfin);
+
 }
