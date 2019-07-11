@@ -38,6 +38,8 @@ public class HtmlActivity extends AppCompatActivity {
     EditText edtHtmlStopList;
     EditText edtHtmlStopTagContentList;
     EditText edtHtmlTagDivisor;
+    EditText edtHtmlTagInicio;
+    EditText edtHtmlTagFin;
 
     RadioGroup htmlRadioGroup;
     RadioButton htmlRadioButton;
@@ -72,6 +74,8 @@ public class HtmlActivity extends AppCompatActivity {
         edtHtmlStopList=findViewById(R.id.edtHtmlStopList);
         edtHtmlStopTagContentList=findViewById(R.id.edtHtmlStopTagContentList);
         edtHtmlTagDivisor=findViewById(R.id.edtHtmlTagDivisor);
+        edtHtmlTagInicio=findViewById(R.id.edtHtmlTagInicio);
+        edtHtmlTagFin=findViewById(R.id.edtHtmlTagFin);
 
         btnEnviarHTML.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,6 +89,8 @@ public class HtmlActivity extends AppCompatActivity {
                 String stopTag= edtHtmlStopList.getText().toString();
                 String contentTagList= edtHtmlStopTagContentList.getText().toString();
                 String divisor=edtHtmlTagDivisor.getText().toString();
+                String palInicio=edtHtmlTagInicio.getText().toString();
+                String palFin=edtHtmlTagFin.getText().toString();
 
                 System.out.println("papa"+url);
 
@@ -92,18 +98,21 @@ public class HtmlActivity extends AppCompatActivity {
                     Toast.makeText(HtmlActivity.this, "Selecciona un formato", Toast.LENGTH_SHORT).show();
                 } else {
                     if(formato.equals("MP3")) {
-                        if(edtHtmlTag.getText().toString().trim().length() == 0 && edtHtmlTagDivisor.getText().toString().trim().length()!=0 && edtHtmlStopList.getText().toString().trim().length()==0 && edtHtmlStopTagContentList.getText().toString().trim().length()==0 ) {
+                        if(edtHtmlTagInicio.getText().toString().trim().length() == 0 && edtHtmlTagFin.getText().toString().trim().length() == 0 && edtHtmlTag.getText().toString().trim().length() == 0 && edtHtmlTagDivisor.getText().toString().trim().length()!=0 && edtHtmlStopList.getText().toString().trim().length()==0 && edtHtmlStopTagContentList.getText().toString().trim().length()==0 ) {
                             sendHtmlMp3Divisor(url,divisor);
                             System.out.println("Func mp3 divisor");}
-                        else if(edtHtmlTag.getText().toString().trim().length() != 0 && edtHtmlStopList.getText().toString().trim().length()==0 && edtHtmlStopTagContentList.getText().toString().trim().length()==0 && edtHtmlTagDivisor.getText().toString().trim().length()==0){
+                        else if(edtHtmlTagInicio.getText().toString().trim().length() == 0 && edtHtmlTagFin.getText().toString().trim().length() == 0 && edtHtmlTag.getText().toString().trim().length() != 0 && edtHtmlStopList.getText().toString().trim().length()==0 && edtHtmlStopTagContentList.getText().toString().trim().length()==0 && edtHtmlTagDivisor.getText().toString().trim().length()==0){
                             sendHtmlToMp3Tag(url,tag);
                             System.out.println("Func solo mp3 tag");
-                        }else if(edtHtmlTag.getText().toString().trim().length() != 0 && edtHtmlStopList.getText().toString().trim().length()!=0 && edtHtmlStopTagContentList.getText().toString().trim().length()!=0 && edtHtmlTagDivisor.getText().toString().trim().length()==0){
+                        }else if(edtHtmlTagInicio.getText().toString().trim().length() == 0 && edtHtmlTagFin.getText().toString().trim().length() == 0 && edtHtmlTag.getText().toString().trim().length() != 0 && edtHtmlStopList.getText().toString().trim().length()!=0 && edtHtmlStopTagContentList.getText().toString().trim().length()!=0 && edtHtmlTagDivisor.getText().toString().trim().length()==0){
                             sendHtmlToMp3TagStopListContentTag(url,tag,stopTag,contentTagList);
                             System.out.println("Func mp3 tagStopContent");
-                        }else if(edtHtmlTag.getText().toString().trim().length()==0 && edtHtmlStopList.getText().toString().trim().length()==0 && edtHtmlStopTagContentList.getText().toString().trim().length()==0 && edtHtmlTagDivisor.getText().toString().trim().length()==0){
+                        }else if(edtHtmlTagInicio.getText().toString().trim().length() == 0 && edtHtmlTagFin.getText().toString().trim().length() == 0 && edtHtmlTag.getText().toString().trim().length()==0 && edtHtmlStopList.getText().toString().trim().length()==0 && edtHtmlStopTagContentList.getText().toString().trim().length()==0 && edtHtmlTagDivisor.getText().toString().trim().length()==0){
                             sendHtmlToMp3(url);
                             System.out.println("Func solo mp3");
+                        }else if(edtHtmlTagInicio.getText().toString().trim().length() != 0 && edtHtmlTagFin.getText().toString().trim().length() != 0 && edtHtmlTag.getText().toString().trim().length()==0 && edtHtmlStopList.getText().toString().trim().length()==0 && edtHtmlStopTagContentList.getText().toString().trim().length()==0 && edtHtmlTagDivisor.getText().toString().trim().length()==0){
+                            sendMp3HtmlPalIniPalFin(url,palInicio,palFin);
+                            System.out.println("Func pala inicio fin mp3");
                         }
                     }
                     if(formato.equals("AAC")){
@@ -116,6 +125,9 @@ public class HtmlActivity extends AppCompatActivity {
                         }else if(edtHtmlTag.getText().toString().trim().length()==0 && edtHtmlStopList.getText().toString().trim().length()==0 && edtHtmlStopTagContentList.getText().toString().trim().length()==0 && edtHtmlTagDivisor.getText().toString().trim().length()==0){
                             sendHtmlToAac(url);
                             System.out.println("Func solo mp3");
+                        }else if(edtHtmlTagInicio.getText().toString().trim().length() != 0 && edtHtmlTagFin.getText().toString().trim().length() != 0 && edtHtmlTag.getText().toString().trim().length()==0 && edtHtmlStopList.getText().toString().trim().length()==0 && edtHtmlStopTagContentList.getText().toString().trim().length()==0 && edtHtmlTagDivisor.getText().toString().trim().length()==0){
+                            sendAacHtmlPalIniPalFin(url,palInicio,palFin);
+                            System.out.println("Func pala inicio fin mp3");
                         }
                     }
                 }
@@ -337,6 +349,69 @@ public class HtmlActivity extends AppCompatActivity {
         });
 
     }
+
+    public void sendMp3HtmlPalIniPalFin(String url, String pI, String pF){
+        RequestBody urlHtml = RequestBody.create(MediaType.parse("text/plain"), url);
+        RequestBody palInicio = RequestBody.create(MediaType.parse("text/plain"), pI);
+        RequestBody palFin = RequestBody.create(MediaType.parse("text/plain"), pF);
+        Call<ResponseBody> call=htmlService.mp3HtmlPalIniPalFin(urlHtml,palInicio,palFin);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if(response.isSuccessful()){
+                    Toast.makeText(HtmlActivity.this,"Url enviada satisfactoriamente", Toast.LENGTH_SHORT).show();
+                    Log.i("Respuesta to String:", response.body().toString());
+                    try {
+                        saveFileAudioMP3(response.body().bytes());
+                    } catch (IOException e) {
+                        Log.i("Error audio:", e.toString());
+                    }
+
+                } else {
+                    Toast.makeText(HtmlActivity.this, "Error conexion con el Servidor 2", Toast.LENGTH_SHORT).show();
+                    Integer error = response.code();
+                    Toast.makeText(HtmlActivity.this, "Error " + error, Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.e("ERROR: ", t.getMessage());
+            }
+        });
+    }
+
+    public void sendAacHtmlPalIniPalFin(String url, String pI, String pF){
+        RequestBody urlHtml = RequestBody.create(MediaType.parse("text/plain"), url);
+        RequestBody palInicio = RequestBody.create(MediaType.parse("text/plain"), pI);
+        RequestBody palFin = RequestBody.create(MediaType.parse("text/plain"), pF);
+        Call<ResponseBody> call=htmlService.aacHtmlPalIniPalFin(urlHtml,palInicio,palFin);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if(response.isSuccessful()){
+                    Toast.makeText(HtmlActivity.this,"Url enviada satisfactoriamente", Toast.LENGTH_SHORT).show();
+                    Log.i("Respuesta to String:", response.body().toString());
+                    try {
+                        saveFileAudioAAC(response.body().bytes());
+                    } catch (IOException e) {
+                        Log.i("Error audio:", e.toString());
+                    }
+
+                } else {
+                    Toast.makeText(HtmlActivity.this, "Error conexion con el Servidor 2", Toast.LENGTH_SHORT).show();
+                    Integer error = response.code();
+                    Toast.makeText(HtmlActivity.this, "Error " + error, Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.e("ERROR: ", t.getMessage());
+            }
+        });
+    }
+
 
     private void saveFileAudioMP3(byte[] mp3SoundByteArray) {
         UUID uuid = UUID.randomUUID();
