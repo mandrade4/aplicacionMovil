@@ -22,7 +22,9 @@
             android:layout_marginTop="50dp"
             android:layout_centerHorizontal="true"
             android:singleLine="true"
-            android:layout_marginLeft="20dp"/>
+            android:layout_marginLeft="20dp"
+            android:digits="0123456789."
+            android:inputType="numberDecimal"/>
 
         <EditText
             android:layout_width="180dp"
@@ -35,7 +37,9 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="25dp"
             android:singleLine="true"
-            android:layout_marginLeft="20dp"/>
+            android:layout_marginLeft="20dp"
+            android:digits="0123456789."
+            android:inputType="numberDecimal"/>
 
 
         <EditText
