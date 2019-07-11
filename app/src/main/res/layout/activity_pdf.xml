@@ -31,7 +31,7 @@
             android:id="@+id/edtPdfpf"
             android:textColorHint="#000000"
             android:background="@drawable/custome_edit_text_bg"
-            android:hint="   Final"
+            android:hint=" Página Final"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="25dp"
             android:singleLine="true"
