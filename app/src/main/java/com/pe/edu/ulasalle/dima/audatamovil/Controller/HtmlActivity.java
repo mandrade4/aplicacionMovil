@@ -100,8 +100,8 @@ public class HtmlActivity extends AppCompatActivity {
                     if(formato.equals("MP3")) {
                         if(edtHtmlTagInicio.getText().toString().trim().length() == 0 && edtHtmlTagFin.getText().toString().trim().length() == 0 && edtHtmlTag.getText().toString().trim().length() == 0 && edtHtmlTagDivisor.getText().toString().trim().length()!=0 && edtHtmlStopList.getText().toString().trim().length()==0 && edtHtmlStopTagContentList.getText().toString().trim().length()==0 ) {
                             sendHtmlMp3Divisor(url,divisor);
-                            System.out.println("Func mp3 divisor");}
-                        else if(edtHtmlTagInicio.getText().toString().trim().length() == 0 && edtHtmlTagFin.getText().toString().trim().length() == 0 && edtHtmlTag.getText().toString().trim().length() != 0 && edtHtmlStopList.getText().toString().trim().length()==0 && edtHtmlStopTagContentList.getText().toString().trim().length()==0 && edtHtmlTagDivisor.getText().toString().trim().length()==0){
+                            System.out.println("Func mp3 divisor");
+                        }else if(edtHtmlTagInicio.getText().toString().trim().length() == 0 && edtHtmlTagFin.getText().toString().trim().length() == 0 && edtHtmlTag.getText().toString().trim().length() != 0 && edtHtmlStopList.getText().toString().trim().length()==0 && edtHtmlStopTagContentList.getText().toString().trim().length()==0 && edtHtmlTagDivisor.getText().toString().trim().length()==0){
                             sendHtmlToMp3Tag(url,tag);
                             System.out.println("Func solo mp3 tag");
                         }else if(edtHtmlTagInicio.getText().toString().trim().length() == 0 && edtHtmlTagFin.getText().toString().trim().length() == 0 && edtHtmlTag.getText().toString().trim().length() != 0 && edtHtmlStopList.getText().toString().trim().length()!=0 && edtHtmlStopTagContentList.getText().toString().trim().length()!=0 && edtHtmlTagDivisor.getText().toString().trim().length()==0){
@@ -116,18 +116,21 @@ public class HtmlActivity extends AppCompatActivity {
                         }
                     }
                     if(formato.equals("AAC")){
-                        if(edtHtmlTag.getText().toString().trim().length() != 0 && edtHtmlStopList.getText().toString().trim().length()==0 && edtHtmlStopTagContentList.getText().toString().trim().length()==0 && edtHtmlTagDivisor.getText().toString().trim().length()==0){
+                        if(edtHtmlTagInicio.getText().toString().trim().length() == 0 && edtHtmlTagFin.getText().toString().trim().length() == 0 && edtHtmlTag.getText().toString().trim().length() == 0 && edtHtmlTagDivisor.getText().toString().trim().length()!=0 && edtHtmlStopList.getText().toString().trim().length()==0 && edtHtmlStopTagContentList.getText().toString().trim().length()==0 ) {
+                            sendHtmlAacDivisor(url,divisor);
+                            System.out.println("Func aac divisor");
+                        }else if(edtHtmlTag.getText().toString().trim().length() != 0 && edtHtmlStopList.getText().toString().trim().length()==0 && edtHtmlStopTagContentList.getText().toString().trim().length()==0 && edtHtmlTagDivisor.getText().toString().trim().length()==0){
                             sendHtmlToAacTag(url,tag);
-                            System.out.println("Func solo mp3 tag");
+                            System.out.println("Func solo aac tag");
                         }else if(edtHtmlTag.getText().toString().trim().length() != 0 && edtHtmlStopList.getText().toString().trim().length()!=0 && edtHtmlStopTagContentList.getText().toString().trim().length()!=0 && edtHtmlTagDivisor.getText().toString().trim().length()==0){
                             sendHtmlToAacTagStopListContentTag(url,tag,stopTag,contentTagList);
-                            System.out.println("Func mp3 tagStopContent");
+                            System.out.println("Func aac tagStopContent");
                         }else if(edtHtmlTag.getText().toString().trim().length()==0 && edtHtmlStopList.getText().toString().trim().length()==0 && edtHtmlStopTagContentList.getText().toString().trim().length()==0 && edtHtmlTagDivisor.getText().toString().trim().length()==0){
                             sendHtmlToAac(url);
-                            System.out.println("Func solo mp3");
+                            System.out.println("Func solo aac");
                         }else if(edtHtmlTagInicio.getText().toString().trim().length() != 0 && edtHtmlTagFin.getText().toString().trim().length() != 0 && edtHtmlTag.getText().toString().trim().length()==0 && edtHtmlStopList.getText().toString().trim().length()==0 && edtHtmlStopTagContentList.getText().toString().trim().length()==0 && edtHtmlTagDivisor.getText().toString().trim().length()==0){
                             sendAacHtmlPalIniPalFin(url,palInicio,palFin);
-                            System.out.println("Func pala inicio fin mp3");
+                            System.out.println("Func pala inicio fin aac");
                         }
                     }
                 }
@@ -259,6 +262,38 @@ public class HtmlActivity extends AppCompatActivity {
     }
 
     //////////////////////aac
+
+    public void sendHtmlAacDivisor(String url,String divisor){
+        RequestBody urlHtml = RequestBody.create(MediaType.parse("text/plain"), url);
+        RequestBody divisorHtml = RequestBody.create(MediaType.parse("text/plain"), divisor);
+        Call<ResponseBody> call=htmlService.aacHtmlDivisor(urlHtml,divisorHtml);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if(response.isSuccessful()){
+                    Toast.makeText(HtmlActivity.this,"Url enviada satisfactoriamente", Toast.LENGTH_SHORT).show();
+                    Log.i("Respuesta to String:", response.body().toString());
+                    try {
+                        saveFileAudioAAC(response.body().bytes());
+                    } catch (IOException e) {
+                        Log.i("Error audio:", e.toString());
+                    }
+
+                } else {
+                    Toast.makeText(HtmlActivity.this, "Error conexion con el Servidor 2", Toast.LENGTH_SHORT).show();
+                    Integer error = response.code();
+                    Toast.makeText(HtmlActivity.this, "Error " + error, Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.e("ERROR: ", t.getMessage());
+            }
+        });
+
+
+    }
 
     public void sendHtmlToAac(String url){
         RequestBody urlHtml = RequestBody.create(MediaType.parse("text/plain"), url);
