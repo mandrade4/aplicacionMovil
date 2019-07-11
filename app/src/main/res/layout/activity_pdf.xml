@@ -37,22 +37,11 @@
             android:singleLine="true"
             android:layout_marginLeft="20dp"/>
 
+
         <EditText
             android:layout_width="180dp"
             android:layout_height="50dp"
             android:layout_below="@+id/edtPdfpf"
-            android:id="@+id/edtPdfp"
-            android:textColorHint="#000000"
-            android:background="@drawable/custome_edit_text_bg"
-            android:hint="  Página"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="25dp"
-            android:singleLine="true"
-            android:layout_marginLeft="20dp"/>
-        <EditText
-            android:layout_width="180dp"
-            android:layout_height="50dp"
-            android:layout_below="@+id/edtPdfp"
             android:id="@+id/edtPdfPalabraInicio"
             android:layout_centerHorizontal="true"
             android:background="@drawable/custome_edit_text_bg"
